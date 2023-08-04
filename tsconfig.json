@@ -1,28 +1,25 @@
 {
   "compilerOptions": {
-    "noEmit": true,
-    "baseUrl": ".",
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": false,
-    "target": "esnext",
-    "module": "esnext",
-    "jsx": "react-jsx",
+    "baseUrl": "./",
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "moduleResolution": "node",
-    "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noEmit": false,
+    "jsx": "react",
     "typeRoots": ["./src/global.d.ts"],
     "paths": {
-      "@src/*": ["src/*"],
-      "@assets/*": ["src/assets/*"],
-      "@pages/*": ["src/pages/*"],
-      "virtual:reload-on-update-in-background-script": ["./src/global.d.ts"],
-      "virtual:reload-on-update-in-view": ["./src/global.d.ts"]
+      "~/*": ["src/*"]
     }
   },
-  "include": ["src", "utils", "vite.config.ts", "node_modules/@types"],
-  "exclude": ["node_modules"]
+  "include": ["src"],
+  "exclude": ["build", "node_modules"]
 }
