@@ -79,7 +79,6 @@ const GoogleLoginButton = () => {
             size="large"
             width="100px"
           />
-          hihihih
         </Box>
       )}
     </>
