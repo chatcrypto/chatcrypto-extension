@@ -1,30 +1,17 @@
 import React from 'react'
-
-import { Button } from '@mantine/core'
-
-import logo from '~/assets/img/logo.svg'
-
-import './Popup.css'
+import AppShell from '../components/Layout/AppShell'
+import { Box, Button, Space, Stack, Title } from '@mantine/core'
+import Features from '../components/Popup/Features'
+import GoogleLoginButton from '../components/common/GoogleLoginButton'
 
 const Popup = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/pages/Popup/Popup.jsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <Button>Click</Button>
-      </header>
-    </div>
+    <AppShell>
+      <Box h="100%">
+        <Features />
+        <GoogleLoginButton />
+      </Box>
+    </AppShell>
   )
 }
 

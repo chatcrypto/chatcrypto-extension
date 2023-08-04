@@ -2,7 +2,6 @@
   "manifest_version": 3,
   "name": "chatcrypto-extension",
   "description": "A chrome extension for chat cryto",
-  "options_page": "options.html",
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon-34.png"
