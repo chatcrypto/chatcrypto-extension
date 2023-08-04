@@ -2,14 +2,6 @@ import chokidar from 'chokidar'
 import { clearTimeout } from 'timers'
 import { WebSocketServer } from 'ws'
 
-function debounce(callback, delay) {
-  let timer
-  return function (...args) {
-    clearTimeout(timer)
-    timer = setTimeout(() => callback(...args), delay)
-  }
-}
-
 const LOCAL_RELOAD_SOCKET_PORT = 8081
 const LOCAL_RELOAD_SOCKET_URL = `ws://localhost:${LOCAL_RELOAD_SOCKET_PORT}`
 const UPDATE_PENDING_MESSAGE = 'wait_update'
@@ -24,6 +16,14 @@ class MessageInterpreter {
   }
   static receive(serializedMessage) {
     return JSON.parse(serializedMessage)
+  }
+}
+
+function debounce(callback, delay) {
+  let timer
+  return function (...args) {
+    clearTimeout(timer)
+    timer = setTimeout(() => callback(...args), delay)
   }
 }
 
