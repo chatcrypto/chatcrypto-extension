@@ -31,14 +31,16 @@ const useStyles = createStyles((theme) => ({
 const TrendingCard = ({
   title,
   content,
+  onClick,
 }: {
   title: string
   content: string
+  onClick: () => void
 }) => {
   const { classes } = useStyles()
 
   return (
-    <Paper className={classes.wrapper}>
+    <Paper className={classes.wrapper} onClick={onClick}>
       <Box className={classes.badge}>{title}</Box>
       <Stack spacing="8px">
         <Text>{content}</Text>

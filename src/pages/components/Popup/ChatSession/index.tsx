@@ -2,23 +2,30 @@ import {
   Box,
   Flex,
   Input,
-  SimpleGrid,
   Space,
+  Stack,
   Text,
   createStyles,
 } from '@mantine/core'
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { IFavouriteQuestion, Question } from './types'
-import TrendingCard from '../TrendingCard'
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
+
+import { ChatContext } from '~/pages/context/Popup/ChatContext'
+import { setMessageList } from '~/pages/context/Popup/ChatContext/reducer'
+import { useWebSocket } from 'react-use-websocket/dist/lib/use-websocket'
+import { API_URL, WEBSOCKET_URL } from '~/constants'
+import {
+  BOT_MESSAGE_TYPE,
+  IBotMessage,
+} from '~/pages/context/Popup/ChatContext/types'
+import LoadingMessage from '../Message/LoadingMessage'
+import ChatInput from '../../common/ChatInput'
 import { ChatIcon } from '../../common/Svg'
+import ErrorMessage from '../Message/ErrorMessage'
+import Message from '../Message'
+import { find } from 'lodash'
 
 const useStyles = createStyles((theme) => ({
-  titleText: {
-    fontSize: '18px',
-    fontWeight: 700,
-    lineHeight: '24px',
-  },
   chatWrapper: {
     position: 'fixed',
     bottom: 0,
@@ -30,92 +37,181 @@ const useStyles = createStyles((theme) => ({
     padding: '16px',
     width: '100%',
   },
+  messageListWrapper: {},
 }))
 
-const getSuggestionQuestions = async () => {
-  const { data } = await axios.get<IFavouriteQuestion>(
-    `https://api-dev.chatcrypto.chat/v1.0/question/favourite`,
-  )
-
-  return data
-}
-
-const ChatSession = () => {
+const ChatSession = ({ initMessage }: { initMessage: string }) => {
   const { classes } = useStyles()
-  const [suggestions, setSuggesstions] = useState<Question[]>([])
+  const [currentChatMessage, setCurrentChatMessage] = useState(initMessage)
+  const chatSessionRef = useRef<HTMLDivElement | null>(null)
+  const { state: chatState, dispatch: dispatchChatContext } =
+    useContext(ChatContext)
+  const { messageList } = chatState
+
+  const disabledChat = useMemo(() => {
+    const loadingMessage = find(messageList, (messageDetail) => {
+      return messageDetail.type === 'loading'
+    })
+
+    if (loadingMessage) return true
+
+    return false
+  }, [messageList])
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getSuggestionQuestions()
-      setSuggesstions(data.data)
-    }
-
-    fetchData()
+    sendMessage(initMessage)
+    setCurrentChatMessage('')
+    dispatchChatContext(
+      setMessageList([
+        {
+          type: 'user',
+          message: initMessage,
+          done: true,
+          id: uuidv4(),
+        },
+      ]),
+    )
   }, [])
+
+  const scrollToBottom = () => {
+    if (chatSessionRef && chatSessionRef.current) {
+      chatSessionRef.current.scrollTop = chatSessionRef.current.scrollHeight
+    }
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messageList])
+
+  const onHandleReceiveMessage = (e: MessageEvent<string>) => {
+    try {
+      const receivedData = e.data
+      if (receivedData) {
+        const { type, sender, message }: IBotMessage = JSON.parse(receivedData)
+        if (
+          (type === BOT_MESSAGE_TYPE.THINKING ||
+            type === BOT_MESSAGE_TYPE.RECEIVE) &&
+          sender === 'bot'
+        ) {
+          dispatchChatContext(
+            setMessageList([
+              ...messageList,
+              {
+                type: 'loading',
+                message: '',
+                done: true,
+                id: uuidv4(),
+              },
+            ]),
+          )
+        }
+
+        if (sender === 'bot' && type === BOT_MESSAGE_TYPE.END) {
+          const newMessageList = messageList.filter((m) => m.type !== 'loading')
+          dispatchChatContext(
+            setMessageList([
+              ...newMessageList,
+              {
+                type: 'bot',
+                message,
+                done: false,
+                id: uuidv4(),
+              },
+            ]),
+          )
+        }
+
+        if (sender === 'bot' && type === BOT_MESSAGE_TYPE.ERROR) {
+          const newMessageList = messageList.filter((m) => m.type !== 'loading')
+          dispatchChatContext(
+            setMessageList([
+              ...newMessageList,
+              {
+                type: 'error',
+                message: '',
+                done: true,
+                id: uuidv4(),
+              },
+            ]),
+          )
+        }
+      }
+    } catch (error) {
+      console.log(error, 'Fail to parse message')
+    }
+  }
+
+  const onHandleReloadMessage = () => {}
+
+  const onHandleSendUserMessage = () => {
+    if (currentChatMessage) {
+      sendMessage(currentChatMessage)
+      dispatchChatContext(
+        setMessageList([
+          ...messageList,
+          {
+            type: 'user',
+            message: currentChatMessage,
+            done: true,
+            id: uuidv4(),
+          },
+        ]),
+      )
+      setCurrentChatMessage('')
+    }
+  }
+
+  const { sendMessage } = useWebSocket(
+    `${WEBSOCKET_URL}/chat/ws/b0fce2548e1a6ed1721066bf69e5feb9e67610aa534bac36a0722cbd2997b2c9`,
+    {
+      onMessage: onHandleReceiveMessage,
+      onError: (e) => {
+        console.log(e, 'error ?')
+      },
+      reconnectInterval: 3000,
+      shouldReconnect: (e) => true,
+    },
+  )
 
   return (
     <Box pos="relative">
-      <Text className={classes.titleText} pb="16px">
-        Trending
-      </Text>
-      <SimpleGrid cols={2}>
-        {suggestions.map((suggestion) => {
-          return (
-            <TrendingCard title="Token Tracking" content={suggestion.text} />
-          )
-        })}
-        {suggestions.map((suggestion) => {
-          return (
-            <TrendingCard title="Token Tracking" content={suggestion.text} />
-          )
-        })}
-        {suggestions.map((suggestion) => {
-          return (
-            <TrendingCard title="Token Tracking" content={suggestion.text} />
-          )
-        })}
-      </SimpleGrid>
-      <Space h="100px" />
+      <Box className={classes.messageListWrapper} ref={chatSessionRef}>
+        <Stack>
+          {messageList.map((messageDetail, index) => {
+            if (messageDetail.type === 'loading') {
+              return <LoadingMessage key={index} />
+            }
+
+            if (messageDetail.type === 'error') {
+              return (
+                <ErrorMessage
+                  key={index}
+                  reloadMessage={onHandleReloadMessage}
+                />
+              )
+            }
+
+            return <Message key={index} messageDetail={messageDetail} />
+          })}
+        </Stack>
+        <Space h="110px" />
+      </Box>
       <Box className={classes.chatWrapper}>
-        {' '}
         <Flex justify="flex-start" w="100%" direction="column">
-          <Input
-            size="md"
-            w="100%"
-            // value={currentChatMessage}
-            // onChange={(e) => {
-            //   setCurrentChatMessage(e.target.value)
-            // }}
-            // onKeyDown={(e) => {
-            //   if (e.keyCode === 13 && currentChatMessage) {
-            //     toggleChatModeOn()
-            //   }
-            // }}
-            styles={(theme) => ({
-              input: {
-                borderRadius: '12px',
-                padding: '16px',
-                height: '56px',
-                fontSize: '14px',
-                fontWeight: 400,
-                lineHeight: '24px',
-                border: '1px solid #EAEAEA',
-                paddingRight: '55px',
-              },
-              rightSection: {
-                paddingRight: theme.spacing.md,
-                '&:hover': {
-                  cursor: 'pointer',
-                },
-              },
-            })}
+          <ChatInput
+            disabled={disabledChat || chatState.botChatting}
+            value={currentChatMessage}
+            onKeyDown={(e) => {
+              if (e.keyCode === 13) {
+                onHandleSendUserMessage()
+              }
+            }}
+            onChange={(e) => {
+              setCurrentChatMessage(e.target.value)
+            }}
             rightSection={
               <ChatIcon
-                onClick={() => {
-                  // if (currentChatMessage) {
-                  //   toggleChatModeOn()
-                  // }
-                }}
+                onClick={() => onHandleSendUserMessage()}
                 style={{
                   width: '25px',
                   height: '25px',

@@ -7,7 +7,12 @@ interface IChatContext {
   dispatch: React.Dispatch<any>
 }
 
-const initialValue: IChatState = {}
+const initialValue: IChatState = {
+  chatMode: false,
+  botChatting: false,
+  allowTypeWritterEffect: true,
+  messageList: [],
+}
 
 const initialContextValue: IChatContext = {
   state: initialValue,

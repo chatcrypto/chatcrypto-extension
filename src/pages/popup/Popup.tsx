@@ -3,7 +3,7 @@ import AppShell from '../components/Layout/AppShell'
 import { Box, Button, Space, Stack, Title } from '@mantine/core'
 import Features from '../components/Popup/Features'
 import GoogleLoginButton from '../components/common/GoogleLoginButton'
-import ChatSession from '../components/Popup/ChatSession'
+import ChatIntroScreen from '../components/Popup/ChatIntroScreen'
 import { ChatContextProvider } from '../context/Popup/ChatContext'
 
 const Popup = () => {
@@ -13,7 +13,7 @@ const Popup = () => {
         <Box h="100%">
           {/* <Features />
         <GoogleLoginButton /> */}
-          <ChatSession />
+          <ChatIntroScreen />
         </Box>
       </AppShell>
     </ChatContextProvider>

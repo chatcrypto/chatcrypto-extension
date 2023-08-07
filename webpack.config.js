@@ -7,6 +7,7 @@ var webpack = require('webpack'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   TerserPlugin = require('terser-webpack-plugin')
 var { CleanWebpackPlugin } = require('clean-webpack-plugin')
+require('dotenv').config({ path: './.env' })
 var ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 var ReactRefreshTypeScript = require('react-refresh-typescript')
 
@@ -37,7 +38,6 @@ if (fileSystem.existsSync(secretsPath)) {
 }
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
-
 var options = {
   mode: process.env.NODE_ENV || 'development',
   entry: {
@@ -134,6 +134,9 @@ var options = {
   plugins: [
     isDevelopment && new ReactRefreshWebpackPlugin(),
     new CleanWebpackPlugin({ verbose: false }),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(process.env),
+    }),
     new webpack.ProgressPlugin(),
     // expose and write the allowed env vars on the compiled bundle
     new webpack.EnvironmentPlugin(['NODE_ENV']),
