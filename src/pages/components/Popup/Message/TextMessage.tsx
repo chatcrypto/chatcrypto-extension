@@ -14,10 +14,12 @@ const TextMessage = ({
   message,
   messageStatus,
   onHandleFinishRenderingMessage,
+  scrollToBottom,
 }: {
   message: string
   messageStatus: boolean
   onHandleFinishRenderingMessage: () => void
+  scrollToBottom: () => void
 }) => {
   const { classes } = useStyles()
   const { state, dispatch } = useContext(ChatContext)

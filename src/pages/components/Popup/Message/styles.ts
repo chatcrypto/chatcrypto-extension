@@ -11,13 +11,13 @@ export default createStyles((theme) => ({
     flex: 1,
     overflowX: 'hidden',
     overflowY: 'hidden',
-    wordBreak: 'break-all',
+    wordBreak: 'break-word',
   },
   primaryTextStyle: {
     fontSize: '14px',
     fontWeight: 400,
     color: '#FFFFFF',
-    wordBreak: 'break-all',
+    wordBreak: 'break-word',
   },
   secondaryTextStyle: {
     fontSize: '14px',
@@ -25,7 +25,7 @@ export default createStyles((theme) => ({
     lineHeight: '20px',
     color: '#353535',
     whiteSpace: 'pre-line',
-    wordBreak: 'break-all',
+    wordBreak: 'break-word',
   },
   textStyle: {
     fontSize: '14px',
@@ -33,7 +33,7 @@ export default createStyles((theme) => ({
     lineHeight: '24px',
     color: '#353535',
     whiteSpace: 'pre-line',
-    wordBreak: 'break-all',
+    wordBreak: 'break-word',
   },
   errorPaperStyle: {
     border: `1px solid ${theme.colors.red[7]}`,
@@ -67,7 +67,7 @@ export default createStyles((theme) => ({
     fontWeight: 600,
     color: '#353535',
     lineHeight: '28px',
-    wordBreak: 'break-all',
+    wordBreak: 'break-word',
   },
   tableWrapper: {
     marginTop: '16px',

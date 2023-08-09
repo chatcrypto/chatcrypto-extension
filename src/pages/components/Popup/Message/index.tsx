@@ -13,7 +13,13 @@ import {
 import { ChatContext } from '~/pages/context/Popup/ChatContext'
 import { setMessageDoneRendering } from '~/pages/context/Popup/ChatContext/reducer'
 
-const Message = ({ messageDetail }: { messageDetail: IMessageDetail }) => {
+const Message = ({
+  messageDetail,
+  scrollToBottom,
+}: {
+  messageDetail: IMessageDetail
+  scrollToBottom: () => void
+}) => {
   const { classes } = useStyles()
   const { state, dispatch } = useContext(ChatContext)
   const { type } = messageDetail
@@ -45,6 +51,7 @@ const Message = ({ messageDetail }: { messageDetail: IMessageDetail }) => {
         onHandleFinishRenderingMessage={() =>
           onHandleFinishRenderingMessage(id)
         }
+        scrollToBottom={scrollToBottom}
       />
     )
   }
@@ -58,6 +65,7 @@ const Message = ({ messageDetail }: { messageDetail: IMessageDetail }) => {
           onHandleFinishRenderingMessage={() =>
             onHandleFinishRenderingMessage(id)
           }
+          scrollToBottom={scrollToBottom}
         />
       )
     }
@@ -69,6 +77,7 @@ const Message = ({ messageDetail }: { messageDetail: IMessageDetail }) => {
           onHandleFinishRenderingMessage={() =>
             onHandleFinishRenderingMessage(id)
           }
+          scrollToBottom={scrollToBottom}
         />
       )
     }

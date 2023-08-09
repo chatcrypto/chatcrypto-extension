@@ -191,7 +191,13 @@ const ChatSession = ({ initMessage }: { initMessage: string }) => {
               )
             }
 
-            return <Message key={index} messageDetail={messageDetail} />
+            return (
+              <Message
+                key={index}
+                messageDetail={messageDetail}
+                scrollToBottom={scrollToBottom}
+              />
+            )
           })}
         </Stack>
         <Space h="110px" />
