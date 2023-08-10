@@ -44,6 +44,8 @@ var options = {
     popup: path.join(__dirname, 'src', 'pages', 'Popup', 'index.tsx'),
     devtools: path.join(__dirname, 'src', 'pages', 'Devtools', 'index.js'),
     panel: path.join(__dirname, 'src', 'pages', 'Panel', 'index.tsx'),
+    background: path.join(__dirname, 'src', 'pages', 'Background', 'index.js'),
+    oauth: path.join(__dirname, 'src', 'oauth.js'),
   },
   chromeExtensionBoilerplate: {
     notHotReload: ['background', 'contentScript', 'devtools'],
@@ -180,7 +182,9 @@ var options = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'pages', 'Popup', 'index.html'),
       filename: 'popup.html',
-      chunks: ['popup'],
+      chunks: ['popup', 'oauth'],
+      // inject: 'body',
+      // scriptLoading: 'module',
       cache: false,
     }),
     new HtmlWebpackPlugin({

@@ -11,8 +11,8 @@ const Popup = () => {
     <ChatContextProvider>
       <AppShell>
         <Box h="100%">
-          {/* <Features />
-        <GoogleLoginButton /> */}
+          {/* <Features /> */}
+          <GoogleLoginButton />
           <ChatIntroScreen />
         </Box>
       </AppShell>

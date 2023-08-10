@@ -82,11 +82,11 @@ const App = () => {
       }}
     >
       <QueryClientProvider client={queryClient}>
-        <GoogleOAuthProvider clientId="681907933403-hl0r8onfuhteg24otjh77tihrv61vbcd.apps.googleusercontent.com">
+        {/* <GoogleOAuthProvider clientId="681907933403-hl0r8onfuhteg24otjh77tihrv61vbcd.apps.googleusercontent.com"> */}
           <AppContextProvider>
             <Popup />
           </AppContextProvider>
-        </GoogleOAuthProvider>
+        {/* </GoogleOAuthProvider> */}
       </QueryClientProvider>
     </MantineProvider>
   )
