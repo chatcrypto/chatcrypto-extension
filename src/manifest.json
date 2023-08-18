@@ -3,7 +3,6 @@
   "name": "chatcrypto-extension",
   "description": "A chrome extension for chat cryto",
   "action": {
-    "default_popup": "popup.html",
     "default_icon": "icon-34.png"
   },
   "background": { "service_worker": "background.bundle.js" },
@@ -15,7 +14,17 @@
     "identity",
     "identity.email",
     "identity.oauth2",
-    "https://www.googleapis.com/"
+    "https://www.googleapis.com/",
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.html"],
+      "matches": ["https://*/*", "http://*/*"]
+    }
   ],
   "oauth2": {
     "client_id": "349249349340-u6pjg3g4j3951oggpbidvj0oiisep78d.apps.googleusercontent.com",
