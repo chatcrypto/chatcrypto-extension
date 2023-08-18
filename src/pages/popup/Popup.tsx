@@ -12,7 +12,7 @@ const Popup = () => {
       <AppShell>
         <Box h="100%">
           {/* <Features /> */}
-          <GoogleLoginButton />
+          {/* <GoogleLoginButton /> */}
           <ChatIntroScreen />
         </Box>
       </AppShell>
