@@ -5,7 +5,9 @@
   "action": {
     "default_icon": "icon-34.png"
   },
-  "background": { "service_worker": "background.bundle.js" },
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
   "icons": {
     "128": "icon-128.png"
   },
