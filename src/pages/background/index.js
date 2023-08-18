@@ -3,25 +3,55 @@ const API_KEY = 'AIzaSyDdJpoy59g2F9gnzLMOb635KhCGZqCIilA'
 let user_signed_in = false
 
 function injectedFunction() {
-  var iframe = document.createElement('iframe')
-  iframe.style.background = 'transparent'
-  iframe.style.position = 'fixed'
-  iframe.style.top = '0px'
-  iframe.style.right = '0px'
-  iframe.style.zIndex = '9000000000000000000'
-  iframe.style.border = '1px solid rgba(155, 155, 155, 0.18)'
-  iframe.style.borderTopLeftRadius = '10px'
-  iframe.style.borderBottomLeftRadius = '10px'
-  iframe.style.boxShadow = 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
-  iframe.src = chrome.runtime.getURL('popup.html')
-  iframe.style.width = '450px'
-  iframe.style.height = '100%'
+  const chatContainerEl = document.getElementById('chat-container')
 
-  document.body.appendChild(iframe)
+  if (!chatContainerEl) {
+    var iframe = document.createElement('iframe')
+    const containerEl = document.createElement('div')
+    containerEl.style.backgroundColor = 'red'
+    containerEl.style.display = 'flex'
+    containerEl.style.justifyContent = 'center'
+    containerEl.style.flexDirection = 'column'
+    containerEl.style.alignItems = 'center'
+    containerEl.setAttribute('id', 'chat-container')
+    containerEl.style.position = 'fixed'
+    containerEl.style.top = '0px'
+    containerEl.style.right = '0px'
+    containerEl.style.zIndex = '9000000000000000000'
+    containerEl.style.border = '1px solid rgba(155, 155, 155, 0.18)'
+    containerEl.style.borderTopLeftRadius = '10px'
+    containerEl.style.borderBottomLeftRadius = '10px'
+    containerEl.style.boxShadow = 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
+    containerEl.style.width = '450px'
+    containerEl.style.height = '100%'
+    containerEl.style.animation = 'width 1s ease'
+    containerEl.innerHTML = '<p id="loading-el">Loading</p>'
+    containerEl.appendChild(iframe)
+    iframe.setAttribute('id', 'chrome-extension')
+    iframe.setAttribute('border', '0')
+    iframe.style.width = '100%'
+    iframe.style.height = '100%'
+    iframe.style.display = 'none'
+    iframe.style.borderTopLeftRadius = '10px'
+    iframe.style.borderBottomLeftRadius = '10px'
+    iframe.style.border = 'none'
+    iframe.style.boxShadow = 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
 
-  document.body.addEventListener('click', () => {
-    iframe.style.width = '0px'
-  })
+    iframe.onload = () => {
+      const loadingIcon = document.getElementById('loading-el')
+      iframe.style.display = 'block'
+      containerEl.style.background = 'transparent'
+      loadingIcon.remove()
+    }
+    iframe.src = chrome.runtime.getURL('popup.html')
+    document.body.appendChild(containerEl)
+  } else {
+    if (chatContainerEl.style.width === '0px') {
+      chatContainerEl.style.width = '450px'
+    } else {
+      chatContainerEl.style.width = '0px'
+    }
+  }
 }
 
 chrome.action.onClicked.addListener(async (tab) => {
