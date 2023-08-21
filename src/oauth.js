@@ -3,7 +3,6 @@ window.onload = function () {
   const logoutEl = document.getElementById('logout')
   if (loginEl) {
     loginEl.addEventListener('click', function () {
-      console.log('hihihhih')
       // chrome.runtime.sendMessage({ message: 'login' }, function (response) {
       //   console.log('login')
       // })

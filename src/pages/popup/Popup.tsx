@@ -6,14 +6,22 @@ import GoogleLoginButton from '../components/common/GoogleLoginButton'
 import ChatIntroScreen from '../components/Popup/ChatIntroScreen'
 import { ChatContextProvider } from '../context/Popup/ChatContext'
 
+const MainApp = () => {
+  return (
+    <>
+      {/* <Features /> */}
+      <GoogleLoginButton />
+      <ChatIntroScreen />
+    </>
+  )
+}
+
 const Popup = () => {
   return (
     <ChatContextProvider>
       <AppShell>
         <Box h="100%">
-          {/* <Features /> */}
-          {/* <GoogleLoginButton /> */}
-          <ChatIntroScreen />
+          <MainApp />
         </Box>
       </AppShell>
     </ChatContextProvider>
