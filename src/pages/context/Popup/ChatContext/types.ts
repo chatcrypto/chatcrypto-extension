@@ -23,7 +23,7 @@ export interface ChartMessage {
 
 export interface IMessageDetail {
   type: 'user' | 'bot' | 'loading' | 'error'
-  message: string | ChartMessage
+  message: string | ChartMessage | ChartMessage[]
   done: boolean
   id: string
 }
@@ -45,7 +45,7 @@ export enum BOT_MESSAGE_TYPE {
 
 export interface IBotMessage {
   wallet: string
-  message: string | ChartMessage
+  message: string | ChartMessage | ChartMessage[]
   type: `${BOT_MESSAGE_TYPE}`
   sender: string
 }

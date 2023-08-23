@@ -11,13 +11,13 @@ import {
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { IFavouriteQuestion, Question } from './types'
-import TrendingCard from '../TrendingCard'
-import { ChatIcon } from '../../common/Svg'
+import TrendingCard from '../../TrendingCard'
+import { ChatIcon } from '../../../common/Svg'
 import { API_URL } from '~/constants'
 import { ChatContext } from '~/pages/context/Popup/ChatContext'
 import { setChatMode } from '~/pages/context/Popup/ChatContext/reducer'
-import ChatSession from '../ChatSession'
-import ChatInput from '../../common/ChatInput'
+import ChatSession from '../../ChatSession'
+import ChatInput from '../../../common/ChatInput'
 
 const useStyles = createStyles((theme) => ({
   titleText: {

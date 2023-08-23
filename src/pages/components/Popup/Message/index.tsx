@@ -5,7 +5,7 @@ import { Avatar, Flex, Paper, rem, Text } from '@mantine/core'
 
 import GraphMessage from './GraphMessage'
 import useStyles from './styles'
-import TextMessage from './TextMessage'
+import TextMessage, { BotMessageWrapper } from './TextMessage'
 import {
   CHART_TYPE,
   IMessageDetail,
@@ -45,51 +45,77 @@ const Message = ({
   }
   if (typeof message === 'string') {
     return (
-      <TextMessage
-        message={message}
-        messageStatus={done}
-        onHandleFinishRenderingMessage={() =>
-          onHandleFinishRenderingMessage(id)
-        }
-        scrollToBottom={scrollToBottom}
-      />
+      <BotMessageWrapper>
+        <TextMessage
+          message={message}
+          messageStatus={done}
+          onHandleFinishRenderingMessage={() =>
+            onHandleFinishRenderingMessage(id)
+          }
+          scrollToBottom={scrollToBottom}
+        />
+      </BotMessageWrapper>
     )
   }
 
   if (typeof message === 'object') {
     if (get(message, 'error')) {
       return (
-        <TextMessage
-          message={get(message, 'data', '') as string}
-          messageStatus={done}
-          onHandleFinishRenderingMessage={() =>
-            onHandleFinishRenderingMessage(id)
-          }
-          scrollToBottom={scrollToBottom}
-        />
+        <BotMessageWrapper>
+          <TextMessage
+            message={get(message, 'data', '') as string}
+            messageStatus={done}
+            onHandleFinishRenderingMessage={() =>
+              onHandleFinishRenderingMessage(id)
+            }
+            scrollToBottom={scrollToBottom}
+          />
+        </BotMessageWrapper>
       )
     }
-    if (message.chart_type === CHART_TYPE.TEXT) {
+
+    if (Array.isArray(message)) {
       return (
-        <TextMessage
-          message={get(message, 'data', '') as string}
-          messageStatus={done}
-          onHandleFinishRenderingMessage={() =>
-            onHandleFinishRenderingMessage(id)
-          }
-          scrollToBottom={scrollToBottom}
-        />
+        <BotMessageWrapper>
+          {message.map((m, index) => {
+            if (m.chart_type === CHART_TYPE.TEXT) {
+              const messageData = get(m, 'data', '')
+              let message = messageData
+              if (typeof messageData === 'object') {
+                message = get(messageData, 'data', '')
+              }
+              return (
+                <>
+                  <TextMessage
+                    message={message as string}
+                    messageStatus={done}
+                    onHandleFinishRenderingMessage={() =>
+                      onHandleFinishRenderingMessage(id)
+                    }
+                    scrollToBottom={scrollToBottom}
+                  />
+                  {index > 0 && <br />}
+                </>
+              )
+            }
+            return (
+              <>
+                <GraphMessage
+                  message={m}
+                  messageStatus={done}
+                  onHandleFinishRenderingMessage={() =>
+                    onHandleFinishRenderingMessage(id)
+                  }
+                />
+                {index > 0 && <br />}
+              </>
+            )
+          })}
+        </BotMessageWrapper>
       )
     }
-    return (
-      <GraphMessage
-        message={message}
-        messageStatus={done}
-        onHandleFinishRenderingMessage={() =>
-          onHandleFinishRenderingMessage(id)
-        }
-      />
-    )
+
+    return <BotMessageWrapper></BotMessageWrapper>
   }
 }
 

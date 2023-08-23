@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Flex,
   Input,
   Space,
@@ -11,7 +12,10 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import { ChatContext } from '~/pages/context/Popup/ChatContext'
-import { setMessageList } from '~/pages/context/Popup/ChatContext/reducer'
+import {
+  setLatestMessageDoneRendering,
+  setMessageList,
+} from '~/pages/context/Popup/ChatContext/reducer'
 import { useWebSocket } from 'react-use-websocket/dist/lib/use-websocket'
 import { API_URL, WEBSOCKET_URL } from '~/constants'
 import {
@@ -32,12 +36,17 @@ const useStyles = createStyles((theme) => ({
     left: 0,
     right: 0,
     height: '110px',
+    width: '100%',
     boxShadow: '0px -4px 8px 0px rgba(0, 0, 0, 0.05)',
     backgroundColor: 'white',
     padding: '16px',
-    width: '100%',
   },
   messageListWrapper: {},
+  finishChatButton: {
+    position: 'fixed',
+    bottom: '110px',
+    right: 0,
+  },
 }))
 
 const ChatSession = ({ initMessage }: { initMessage: string }) => {
@@ -46,7 +55,7 @@ const ChatSession = ({ initMessage }: { initMessage: string }) => {
   const chatSessionRef = useRef<HTMLDivElement | null>(null)
   const { state: chatState, dispatch: dispatchChatContext } =
     useContext(ChatContext)
-  const { messageList } = chatState
+  const { messageList, botChatting } = chatState
 
   const disabledChat = useMemo(() => {
     const loadingMessage = find(messageList, (messageDetail) => {
@@ -202,6 +211,21 @@ const ChatSession = ({ initMessage }: { initMessage: string }) => {
         </Stack>
         <Space h="110px" />
       </Box>
+      {botChatting && (
+        <Flex
+          justify="flex-end"
+          mb="8px"
+          mr="16px"
+          className={classes.finishChatButton}
+        >
+          <Button
+            size="sm"
+            onClick={() => dispatchChatContext(setLatestMessageDoneRendering())}
+          >
+            Finish generating
+          </Button>
+        </Flex>
+      )}
       <Box className={classes.chatWrapper}>
         <Flex justify="flex-start" w="100%" direction="column">
           <ChatInput

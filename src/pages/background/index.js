@@ -1,3 +1,5 @@
+const { get } = require('lodash')
+
 const API_KEY = 'AIzaSyDdJpoy59g2F9gnzLMOb635KhCGZqCIilA'
 
 let user_signed_in = false
@@ -73,7 +75,7 @@ chrome.action.onClicked.addListener(async (tab) => {
   })
 })
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   if (request.message === 'googleLogin') {
     chrome.identity.getAuthToken(
       {
@@ -125,5 +127,24 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     //     sendResponse(true)
     //   },
     // )
+  }
+
+  if (request.message === 'closePopup') {
+    const tabId = get(sender, 'tab.id', null)
+
+    if (tabId) {
+      await chrome.scripting.executeScript({
+        target: { tabId: tabId, allFrames: true },
+        func: () => {
+          console.log('script triggered ?')
+          const chatContainerEl = document.getElementById('chat-container')
+          if (chatContainerEl) {
+            if (chatContainerEl.style.width === '450px') {
+              chatContainerEl.style.width = '0px'
+            }
+          }
+        },
+      })
+    }
   }
 })

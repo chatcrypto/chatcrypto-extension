@@ -10,6 +10,21 @@ import { BotIcon } from '../../common/Svg'
 import { ChatContext } from '~/pages/context/Popup/ChatContext'
 import { setBotChatting } from '~/pages/context/Popup/ChatContext/reducer'
 
+export const BotMessageWrapper = ({ children }: React.PropsWithChildren) => {
+  const { classes } = useStyles()
+
+  return (
+    <Flex gap={16} align="flex-start">
+      <BotIcon
+        style={{
+          alignSelf: 'flex-start',
+        }}
+      />
+      <Paper className={classes.secondaryPaperStyle}>{children}</Paper>
+    </Flex>
+  )
+}
+
 const TextMessage = ({
   message,
   messageStatus,
@@ -49,48 +64,37 @@ const TextMessage = ({
   }, [message])
   if (formattedMessage) {
     return (
-      <Flex gap={16} align="flex-start">
-        <BotIcon
-          style={{
-            alignSelf: 'flex-start',
-          }}
-        />
-        <Paper className={classes.secondaryPaperStyle}>
-          <Text className={classes.textStyle}>
-            {state.allowTypeWritterEffect && !messageStatus ? (
-              <Typewriter
-                onInit={(typewriter) => {
-                  typewriter
-                    .typeString(formattedMessage)
-                    .start()
-                    .callFunction(() => {
-                      const cursorEl = document.querySelector(
-                        '.Typewriter__cursor',
-                      )
-                      if (cursorEl) {
-                        cursorEl.remove()
-                      }
-                      dispatch(setBotChatting(false))
-                      onHandleFinishRenderingMessage()
-                    })
-                }}
-                options={{
-                  delay: 0,
-                }}
-              />
-            ) : (
-              <div
-                style={{
-                  wordBreak: 'break-all',
-                }}
-                dangerouslySetInnerHTML={{
-                  __html: formattedMessage,
-                }}
-              />
-            )}
-          </Text>
-        </Paper>
-      </Flex>
+      <Text className={classes.textStyle}>
+        {state.allowTypeWritterEffect && !messageStatus ? (
+          <Typewriter
+            onInit={(typewriter) => {
+              typewriter
+                .typeString(formattedMessage)
+                .start()
+                .callFunction(() => {
+                  const cursorEl = document.querySelector('.Typewriter__cursor')
+                  if (cursorEl) {
+                    cursorEl.remove()
+                  }
+                  dispatch(setBotChatting(false))
+                  onHandleFinishRenderingMessage()
+                })
+            }}
+            options={{
+              delay: 0,
+            }}
+          />
+        ) : (
+          <div
+            style={{
+              wordBreak: 'break-all',
+            }}
+            dangerouslySetInnerHTML={{
+              __html: formattedMessage,
+            }}
+          />
+        )}
+      </Text>
     )
   }
 }

@@ -44,7 +44,7 @@ export const chatSlice = createSlice({
       })
       setMessageList(newMessageList)
     },
-    setLatestMessageDoneRendering: (state, action) => {
+    setLatestMessageDoneRendering: (state) => {
       state.allowTypeWritterEffect = false
       state.botChatting = false
 
