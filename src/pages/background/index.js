@@ -1,5 +1,24 @@
 const { get } = require('lodash')
 
+// Example POST method implementation:
+async function postData(url = '', data = {}) {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
+  })
+  return response.json() // parses JSON response into native JavaScript objects
+}
+
 const API_KEY = 'AIzaSyDdJpoy59g2F9gnzLMOb635KhCGZqCIilA'
 
 let user_signed_in = false
@@ -76,57 +95,39 @@ chrome.action.onClicked.addListener(async (tab) => {
 })
 
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+  console.log(request)
   if (request.message === 'googleLogin') {
     chrome.identity.getAuthToken(
       {
         interactive: true,
       },
       function (auth_token) {
-        console.log(auth_token)
         sendResponse(true)
-        let init = {
-          method: 'GET',
-          async: true,
-          headers: {
-            Authorization: 'Bearer ' + auth_token,
-            'Content-Type': 'application/json',
-          },
-          contentType: 'json',
-        }
-
-        fetch(
-          `https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses&key=${API_KEY}`,
-          init,
-        )
-          .then((response) => response.json())
-          .then(function (data) {
-            console.log('me', data)
-            // let returnedContacts = data.memberResourceNames
-            // for (let i = 0; i < returnedContacts.length; i++) {
-            //   fetch(
-            //     `https://people.googleapis.com/v1/' +
-            //       returnedContacts[i] +
-            //       '?personFields=photos&key=${API_KEY}`,
-            //     init,
-            //   )
-            //     .then((response) => response.json())
-            //     .then(function (data) {
-            //       console.log('returnedContacts', data)
-            //     })
-            // }
-          })
+        postData(`https://api-dev.chatcrypto.chat/auth/gmail/extension`, {
+          token: auth_token,
+        }).then((data) => {
+          if (data.access_token) {
+            chrome.storage.local.set({ access_token: data.access_token })
+            chrome.runtime.sendMessage({
+              message: 'access_token',
+              data: {
+                access_token: data.access_token,
+              },
+            })
+          }
+        })
       },
     )
+  }
 
-    // chrome.identity.getProfileUserInfo(
-    //   {
-    //     accountStatus: 'ANY',
-    //   },
-    //   function (user_info) {
-    //     console.log(user_info)
-    //     sendResponse(true)
-    //   },
-    // )
+  if (request.message === 'googleLogout') {
+    chrome.storage.local.get('access_token').then((data) => {
+      if (data.access_token) {
+        chrome.identity.clearAllCachedAuthTokens((response) => {
+          chrome.storage.local.set({ access_token: '' })
+        })
+      }
+    })
   }
 
   if (request.message === 'closePopup') {
@@ -148,3 +149,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     }
   }
 })
+
+// chrome.storage.local.onChanged.addListener((changes) => {
+//   console.log(changes, 'changes bgbgbgbgbgb')
+// })
