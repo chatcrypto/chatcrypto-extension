@@ -1,6 +1,7 @@
+// @ts-nocheck
 import React, { createContext, useEffect, useState } from 'react'
 // import { deleteCookie, getCookie, hasCookie } from 'cookies-next'
-// import jwt_decode from 'jwt-decode'
+import jwt_decode from 'jwt-decode'
 import { googleLogout } from '@react-oauth/google'
 type AppContextType = {
   accessToken: string
@@ -29,13 +30,13 @@ const AppContextProvider: React.FC<
   //   setAccessToken(accessTokenCookie)
   // }, [])
 
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     setGoogleAccount(jwt_decode(accessToken))
-  //   } else {
-  //     setGoogleAccount(null)
-  //   }
-  // }, [accessToken])
+  useEffect(() => {
+    if (accessToken) {
+      setGoogleAccount(jwt_decode(accessToken))
+    } else {
+      setGoogleAccount(null)
+    }
+  }, [accessToken])
 
   const hashEmailFunc = async () => {
     if (!googleAccount?.email) {
@@ -57,14 +58,16 @@ const AppContextProvider: React.FC<
       // seconds
       const currentTime = new Date().getTime() / 1000
 
-      // if (googleAccount && currentTime - googleAccount.exp >= 0) {
-      //   // logout
-      //   googleLogout()
-      //   setAccessToken('')
-      //   if (hasCookie('access_token')) {
-      //     deleteCookie('access_token')
-      //   }
-      // }
+      if (googleAccount && currentTime - googleAccount.exp >= 0) {
+        // logout
+        if (chrome && chrome.identity) {
+          if (accessToken) {
+            chrome.identity.clearAllCachedAuthTokens((response) => {
+              setAccessToken('')
+            })
+          }
+        }
+      }
     }, 600000)
     return () => clearInterval(interval)
   }, [googleAccount])
