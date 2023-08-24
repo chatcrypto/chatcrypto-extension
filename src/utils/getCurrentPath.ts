@@ -1,5 +1,3 @@
-import React from 'react'
-import { useLocation, useParams } from 'react-router-dom'
 import type { Location, Params } from 'react-router-dom'
 
 export const getRoutePath = (location: Location, params: Params): string => {

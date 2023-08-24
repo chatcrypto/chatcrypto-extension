@@ -1,27 +1,19 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import ReactDOMServer from 'react-dom/server'
 import Typewriter from 'typewriter-effect'
 
-import {
-  Anchor,
-  Badge,
-  Box,
-  Flex,
-  List,
-  Paper,
-  ScrollArea,
-  Table,
-  Text,
-} from '@mantine/core'
+import { Anchor, Badge, Box, Flex, Paper, Text } from '@mantine/core'
 
-import useStyles from './styles'
+import { ChatContext } from '~/pages/context/Popup/ChatContext'
+import { setBotChatting } from '~/pages/context/Popup/ChatContext/reducer'
 import {
   CHART_TYPE,
   ChartMessage,
 } from '~/pages/context/Popup/ChatContext/types'
+
 import { BotIcon } from '../../common/Svg'
-import { ChatContext } from '~/pages/context/Popup/ChatContext'
-import { setBotChatting } from '~/pages/context/Popup/ChatContext/reducer'
+
+import useStyles from './styles'
 
 interface ITableUI {
   data: {

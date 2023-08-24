@@ -1,14 +1,15 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { MantineProvider, rem } from '@mantine/core'
+import { Notifications } from '@mantine/notifications'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+import AppContextProvider from '../context/Popup/AppContext/AppProvider'
 
 import Popup from './Popup'
 
 import './index.css'
-import AppContextProvider from '../context/Popup/AppContext/AppProvider'
-import { GoogleOAuthProvider } from '@react-oauth/google'
 
 const queryClient = new QueryClient()
 
@@ -82,11 +83,10 @@ const App = () => {
       }}
     >
       <QueryClientProvider client={queryClient}>
-        {/* <GoogleOAuthProvider clientId="681907933403-hl0r8onfuhteg24otjh77tihrv61vbcd.apps.googleusercontent.com"> */}
         <AppContextProvider>
           <Popup />
+          <Notifications />
         </AppContextProvider>
-        {/* </GoogleOAuthProvider> */}
       </QueryClientProvider>
     </MantineProvider>
   )

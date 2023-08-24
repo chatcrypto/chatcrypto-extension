@@ -15,7 +15,7 @@
     "resolveJsonModule": true,
     "noEmit": false,
     "jsx": "react",
-    "typeRoots": ["./src/global.d.ts"],
+    "typeRoots": ["node_modules/@types"],
     "paths": {
       "~/*": ["src/*"]
     }

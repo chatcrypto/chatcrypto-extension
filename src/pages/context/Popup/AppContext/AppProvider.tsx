@@ -1,8 +1,6 @@
-// @ts-nocheck
 import React, { createContext, useEffect, useState } from 'react'
-// import { deleteCookie, getCookie, hasCookie } from 'cookies-next'
 import jwt_decode from 'jwt-decode'
-import { googleLogout } from '@react-oauth/google'
+
 type AppContextType = {
   accessToken: string
   setAccessToken: any
@@ -15,6 +13,7 @@ type AccountType = {
   name: string
   exp: number
   iat: number
+  token: string
 }
 export const AppContext = createContext<AppContextType>(null as any)
 
@@ -62,7 +61,7 @@ const AppContextProvider: React.FC<
         // logout
         if (chrome && chrome.identity) {
           if (accessToken) {
-            chrome.identity.clearAllCachedAuthTokens((response) => {
+            chrome.identity.clearAllCachedAuthTokens(() => {
               setAccessToken('')
             })
           }

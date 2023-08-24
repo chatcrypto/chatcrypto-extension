@@ -1,23 +1,26 @@
+import React, { useContext, useEffect, useState } from 'react'
+import axios from 'axios'
+
 import {
   Box,
+  createStyles,
   Flex,
-  Input,
   SimpleGrid,
   Skeleton,
   Space,
   Text,
-  createStyles,
 } from '@mantine/core'
-import axios from 'axios'
-import React, { useContext, useEffect, useState } from 'react'
-import { IFavouriteQuestion, Question } from './types'
-import TrendingCard from '../../TrendingCard'
-import { ChatIcon } from '../../../common/Svg'
+
 import { API_URL } from '~/constants'
 import { ChatContext } from '~/pages/context/Popup/ChatContext'
 import { setChatMode } from '~/pages/context/Popup/ChatContext/reducer'
-import ChatSession from '../../ChatSession'
+
 import ChatInput from '../../../common/ChatInput'
+import { ChatIcon } from '../../../common/Svg'
+import ChatSession from '../../ChatSession'
+import TrendingCard from '../../TrendingCard'
+
+import { IFavouriteQuestion, Question } from './types'
 
 const useStyles = createStyles((theme) => ({
   titleText: {

@@ -1,20 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+
 import {
-  Box,
-  Flex,
-  Footer,
-  Header,
   AppShell as MantineAppShell,
+  Box,
+  createStyles,
+  Flex,
+  Header,
   Popover,
   Stack,
   Text,
-  createStyles,
 } from '@mantine/core'
-import { CancelIcon, HomeIcon, LogoIcon, MenuDotIcon } from '../common/Svg'
-import MenuItem from './MenuItem'
-import { getRoutePath } from '~/utils/getCurrentPath'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useClickOutside, useDisclosure } from '@mantine/hooks'
+
+import useAuth from '~/hooks/useAuth'
+import { AppContext } from '~/pages/context/Popup/AppContext/AppProvider'
+import { getRoutePath } from '~/utils/getCurrentPath'
+
+import { CancelIcon, LogoIcon, LogoutIcon, MenuDotIcon } from '../common/Svg'
+
+import MenuItem from './MenuItem'
 
 const MenuItems = [
   {
@@ -40,11 +45,13 @@ const useStyles = createStyles((theme) => ({
 
 const AppShell = ({ children }: { children: React.ReactNode }) => {
   const { classes } = useStyles()
+  const { accessToken } = useContext(AppContext)
   const location = useLocation()
   const params = useParams()
   const currentPath = getRoutePath(location, params)
   const [opened, { close, open }] = useDisclosure(false)
   const navigate = useNavigate()
+  const { logout } = useAuth()
   const outsideRef = useClickOutside(() => close())
   const onHandleNavigate = (pathName: string) => {
     close()
@@ -52,9 +59,7 @@ const AppShell = ({ children }: { children: React.ReactNode }) => {
   }
 
   const onHandleCloseExtension = () => {
-    // @ts-ignore
     if (chrome && chrome.runtime && chrome.runtime.sendMessage) {
-      // @ts-ignore
       chrome.runtime.sendMessage({ message: 'closePopup' })
     }
   }
@@ -73,7 +78,7 @@ const AppShell = ({ children }: { children: React.ReactNode }) => {
       })}
       header={
         <Header
-          height={75}
+          height={accessToken ? 100 : 75}
           p="16px"
           styles={(theme) => ({
             root: {
@@ -82,12 +87,37 @@ const AppShell = ({ children }: { children: React.ReactNode }) => {
           })}
         >
           <Flex justify="space-between" align="center">
-            <Flex align="center">
-              <LogoIcon />
-              <Text ml="12px" className={classes.titleText}>
-                Chatcrypto
-              </Text>
-            </Flex>
+            <Box>
+              <Flex align="center">
+                <LogoIcon />
+                <Text ml="12px" className={classes.titleText}>
+                  Chatcrypto
+                </Text>
+              </Flex>
+              {accessToken && (
+                <Flex
+                  gap="12px"
+                  mt="8px"
+                  sx={{
+                    '&:hover': {
+                      cursor: 'pointer',
+                    },
+                  }}
+                  onClick={logout}
+                >
+                  <LogoutIcon />
+                  <Text
+                    sx={{
+                      color: '#EAEAEA',
+                      fontSize: '12px',
+                    }}
+                  >
+                    Log out
+                  </Text>
+                </Flex>
+              )}
+            </Box>
+
             <Flex align="center" gap="16px">
               <Popover
                 width={230}

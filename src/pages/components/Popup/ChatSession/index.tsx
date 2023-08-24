@@ -1,33 +1,35 @@
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { find } from 'lodash'
+import { useWebSocket } from 'react-use-websocket/dist/lib/use-websocket'
+import { v4 as uuidv4 } from 'uuid'
+
 import {
   Box,
   Button,
+  createStyles,
   Flex,
-  Input,
   Space,
   Stack,
   Text,
-  createStyles,
 } from '@mantine/core'
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 
+import { WEBSOCKET_URL } from '~/constants'
+import { AppContext } from '~/pages/context/Popup/AppContext/AppProvider'
 import { ChatContext } from '~/pages/context/Popup/ChatContext'
 import {
   setLatestMessageDoneRendering,
   setMessageList,
 } from '~/pages/context/Popup/ChatContext/reducer'
-import { useWebSocket } from 'react-use-websocket/dist/lib/use-websocket'
-import { API_URL, WEBSOCKET_URL } from '~/constants'
 import {
   BOT_MESSAGE_TYPE,
   IBotMessage,
 } from '~/pages/context/Popup/ChatContext/types'
-import LoadingMessage from '../Message/LoadingMessage'
+
 import ChatInput from '../../common/ChatInput'
 import { ChatIcon } from '../../common/Svg'
-import ErrorMessage from '../Message/ErrorMessage'
 import Message from '../Message'
-import { find } from 'lodash'
+import ErrorMessage from '../Message/ErrorMessage'
+import LoadingMessage from '../Message/LoadingMessage'
 
 const useStyles = createStyles((theme) => ({
   chatWrapper: {
@@ -53,6 +55,7 @@ const ChatSession = ({ initMessage }: { initMessage: string }) => {
   const { classes } = useStyles()
   const [currentChatMessage, setCurrentChatMessage] = useState(initMessage)
   const chatSessionRef = useRef<HTMLDivElement | null>(null)
+  const { googleAccount } = useContext(AppContext)
   const { state: chatState, dispatch: dispatchChatContext } =
     useContext(ChatContext)
   const { messageList, botChatting } = chatState
@@ -171,7 +174,7 @@ const ChatSession = ({ initMessage }: { initMessage: string }) => {
   }
 
   const { sendMessage } = useWebSocket(
-    `${WEBSOCKET_URL}/chat/ws/b0fce2548e1a6ed1721066bf69e5feb9e67610aa534bac36a0722cbd2997b2c9`,
+    `${WEBSOCKET_URL}/chat/ws/${googleAccount?.token}`,
     {
       onMessage: onHandleReceiveMessage,
       onError: (e) => {

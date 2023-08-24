@@ -1,9 +1,11 @@
 import React from 'react'
+
 import { Flex, Paper, Text } from '@mantine/core'
 import { IconReload } from '@tabler/icons-react'
 
-import useStyles from './styles'
 import { BotIcon } from '../../common/Svg'
+
+import useStyles from './styles'
 
 const ErrorMessage = ({ reloadMessage }: { reloadMessage: () => void }) => {
   const { classes } = useStyles()

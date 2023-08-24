@@ -1,14 +1,16 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ReactDOMServer from 'react-dom/server'
 import Typewriter from 'typewriter-effect'
 
 import { Anchor, Flex, Paper, Text } from '@mantine/core'
 
-import useStyles from './styles'
-import { extractUrls } from '~/utils/extractUrls'
-import { BotIcon } from '../../common/Svg'
 import { ChatContext } from '~/pages/context/Popup/ChatContext'
 import { setBotChatting } from '~/pages/context/Popup/ChatContext/reducer'
+import { extractUrls } from '~/utils/extractUrls'
+
+import { BotIcon } from '../../common/Svg'
+
+import useStyles from './styles'
 
 export const BotMessageWrapper = ({ children }: React.PropsWithChildren) => {
   const { classes } = useStyles()

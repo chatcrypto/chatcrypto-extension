@@ -1,8 +1,10 @@
 import React from 'react'
+
 import { Flex, Paper } from '@mantine/core'
 
-import ThreeDotsWave from './ThreeDotsLoading'
 import { BotIcon } from '../../common/Svg'
+
+import ThreeDotsWave from './ThreeDotsLoading'
 
 const LoadingMessage = () => {
   return (

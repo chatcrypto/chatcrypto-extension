@@ -1,5 +1,7 @@
 import React from 'react'
-import { Flex, SimpleGrid, Stack, Text, createStyles } from '@mantine/core'
+
+import { createStyles, Flex, Stack, Text } from '@mantine/core'
+
 import { QuestionIcon } from '../../common/Svg'
 
 const useStyles = createStyles((theme) => ({

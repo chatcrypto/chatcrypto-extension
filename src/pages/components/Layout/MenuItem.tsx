@@ -1,9 +1,8 @@
-import { Flex, Text, px } from '@mantine/core'
-import { useHover } from '@mantine/hooks'
 import React, { useMemo } from 'react'
 
+import { Flex, px, Text } from '@mantine/core'
 import { createStyles } from '@mantine/core'
-import { useNavigate } from 'react-router-dom'
+import { useHover } from '@mantine/hooks'
 
 const useStyles = createStyles(
   (

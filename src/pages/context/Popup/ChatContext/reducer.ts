@@ -1,7 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { Action, PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { IChatState, IMessageDetail } from './types'
 import { findLast } from 'lodash'
+
+import { Action, createSlice, PayloadAction } from '@reduxjs/toolkit'
+
+import { IChatState, IMessageDetail } from './types'
 
 export const initialState: IChatState = {
   chatMode: false,

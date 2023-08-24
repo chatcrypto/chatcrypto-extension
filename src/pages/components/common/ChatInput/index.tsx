@@ -1,4 +1,5 @@
 import React, { InputHTMLAttributes } from 'react'
+
 import { Input, InputProps } from '@mantine/core'
 
 export type MantineInputPropsTypes = InputProps &

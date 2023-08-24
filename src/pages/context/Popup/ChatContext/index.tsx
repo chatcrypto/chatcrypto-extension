@@ -1,6 +1,7 @@
 import React, { createContext, useReducer } from 'react'
-import { IChatState } from './types'
+
 import { reducer } from './reducer'
+import { IChatState } from './types'
 
 interface IChatContext {
   state: IChatState

@@ -3,15 +3,16 @@ import { get } from 'lodash'
 
 import { Avatar, Flex, Paper, rem, Text } from '@mantine/core'
 
-import GraphMessage from './GraphMessage'
-import useStyles from './styles'
-import TextMessage, { BotMessageWrapper } from './TextMessage'
+import { ChatContext } from '~/pages/context/Popup/ChatContext'
+import { setMessageDoneRendering } from '~/pages/context/Popup/ChatContext/reducer'
 import {
   CHART_TYPE,
   IMessageDetail,
 } from '~/pages/context/Popup/ChatContext/types'
-import { ChatContext } from '~/pages/context/Popup/ChatContext'
-import { setMessageDoneRendering } from '~/pages/context/Popup/ChatContext/reducer'
+
+import GraphMessage from './GraphMessage'
+import useStyles from './styles'
+import TextMessage, { BotMessageWrapper } from './TextMessage'
 
 const Message = ({
   messageDetail,

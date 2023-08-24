@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box, Paper, Stack, Text, createStyles } from '@mantine/core'
+
+import { Box, createStyles, Paper, Stack, Text } from '@mantine/core'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
