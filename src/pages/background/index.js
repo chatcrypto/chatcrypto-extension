@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { get } = require('lodash')
 
 const API_KEY = 'AIzaSyDdJpoy59g2F9gnzLMOb635KhCGZqCIilA'
@@ -38,7 +39,7 @@ function injectedFunction() {
     containerEl.style.borderTopLeftRadius = '10px'
     containerEl.style.borderBottomLeftRadius = '10px'
     containerEl.style.boxShadow = 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
-    containerEl.style.width = '450px'
+    containerEl.style.width = '650px'
     containerEl.style.height = '100%'
     containerEl.appendChild(iframe)
     iframe.setAttribute('id', 'chrome-extension')

@@ -22,7 +22,7 @@ const Message = ({
   scrollToBottom: () => void
 }) => {
   const { classes } = useStyles()
-  const { state, dispatch } = useContext(ChatContext)
+  const { dispatch } = useContext(ChatContext)
   const { type } = messageDetail
   const { message, id, done } = messageDetail
 

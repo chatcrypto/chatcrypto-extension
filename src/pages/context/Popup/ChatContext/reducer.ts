@@ -44,7 +44,8 @@ export const chatSlice = createSlice({
 
         return m
       })
-      setMessageList(newMessageList)
+      
+      state.messageList = newMessageList
     },
     setLatestMessageDoneRendering: (state) => {
       state.allowTypeWritterEffect = false
@@ -64,8 +65,7 @@ export const chatSlice = createSlice({
 
         return m
       })
-
-      setMessageList(newMessageList)
+      state.messageList = newMessageList
     },
   },
 })

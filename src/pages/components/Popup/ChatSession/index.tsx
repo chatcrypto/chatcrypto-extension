@@ -17,6 +17,8 @@ import { WEBSOCKET_URL } from '~/constants'
 import { AppContext } from '~/pages/context/Popup/AppContext/AppProvider'
 import { ChatContext } from '~/pages/context/Popup/ChatContext'
 import {
+  setAllowTypeWritterEffect,
+  setBotChatting,
   setLatestMessageDoneRendering,
   setMessageList,
 } from '~/pages/context/Popup/ChatContext/reducer'
@@ -120,6 +122,8 @@ const ChatSession = ({ initMessage }: { initMessage: string }) => {
 
         if (sender === 'bot' && type === BOT_MESSAGE_TYPE.END) {
           const newMessageList = messageList.filter((m) => m.type !== 'loading')
+          dispatchChatContext(setBotChatting(true))
+          dispatchChatContext(setAllowTypeWritterEffect(true))
           dispatchChatContext(
             setMessageList([
               ...newMessageList,

@@ -41,11 +41,6 @@ const TextMessage = ({
   const { classes } = useStyles()
   const { state, dispatch } = useContext(ChatContext)
   const [formattedMessage, setFormattedMessage] = useState('')
-
-  useEffect(() => {
-    dispatch(setBotChatting(true))
-  }, [])
-
   useEffect(() => {
     const matches = extractUrls(message)
     if (matches && matches.length !== 0) {
@@ -89,7 +84,7 @@ const TextMessage = ({
         ) : (
           <div
             style={{
-              wordBreak: 'break-all',
+              wordBreak: 'break-word',
             }}
             dangerouslySetInnerHTML={{
               __html: formattedMessage,

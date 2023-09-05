@@ -72,6 +72,12 @@ const ChatIntroScreen = () => {
     fetchData()
   }, [])
 
+  useEffect(() => {
+    return () => {
+      dispatchChatContext(setChatMode(false))
+    }
+  }, [])
+
   const onTriggerChatMode = (message: string) => {
     setCurrentChatMessage(message)
     dispatchChatContext(setChatMode(true))

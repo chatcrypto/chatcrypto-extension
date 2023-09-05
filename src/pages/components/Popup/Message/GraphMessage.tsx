@@ -44,12 +44,14 @@ const TableUI = ({
   referencer,
   title,
   description,
+  onHandleBotFinish,
   onHandleFinishRenderingMessage,
 }: ITableUI) => {
   const { row_data, table_header } = data
   const { classes } = useStyles()
 
   useEffect(() => {
+    onHandleBotFinish()
     onHandleFinishRenderingMessage()
   }, [])
 
@@ -58,7 +60,6 @@ const TableUI = ({
       <tr key={index} className={classes.tableMainText}>
         {row.map((v, cIndex) => {
           if (table_header[cIndex].toLocaleLowerCase() === 'status') {
-            console.log(v, 'v')
             return (
               <td key={cIndex}>
                 <Badge
