@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import { Box } from '@mantine/core'
+import { Box, Stack, Text } from '@mantine/core'
 
 import { API_URL } from '~/constants'
+
+import PluginDetail from '../../PluginDetail'
 
 import { IPluginDetail, IPluginListDetail, IPluginResponse } from './types'
 
@@ -51,7 +53,23 @@ const AnalysisScreen = () => {
     })
   }, [])
 
-  return <Box pos="relative">Welcome to analysis screen</Box>
+  return (
+    <Box pos="relative">
+      <Text>Welcome to analysis screen</Text>
+      <Stack spacing="24px">
+        <PluginDetail />
+        <PluginDetail />
+        <PluginDetail />
+        <PluginDetail />
+        <PluginDetail />
+        <PluginDetail />
+        <PluginDetail />
+        <PluginDetail />
+        <PluginDetail />
+        <PluginDetail />
+      </Stack>
+    </Box>
+  )
 }
 
 export default AnalysisScreen
