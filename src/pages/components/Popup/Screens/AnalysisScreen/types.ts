@@ -8,7 +8,14 @@ export interface IPluginListDetail {
 
 export interface IPluginDetail {
   chart_type: string
-  data: Record<any, any>
+  data: {
+    label: string,
+    row_data: {
+      [key: string]: any
+    }[]
+    x_field: string
+    y_field: string
+  }[]
   debug_plugin_metadata: Record<any, any>
   debug_plugin_name: Record<any, any>
   description: string
@@ -21,4 +28,12 @@ export interface IPluginDetail {
 export interface IPluginResponse<T> {
   data: T[]
   message: string
+}
+export interface IPluginDetailResponse<T> {
+  data: T
+  message: string
+}
+
+export enum PluginType {
+  LineChart = 'line',
 }

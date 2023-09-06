@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
 
 import { Box, Stack, Text } from '@mantine/core'
@@ -19,17 +19,15 @@ const getPlugins = async (domain: string) => {
   }
 }
 
-const getPluginDetail = async (pluginId: string, domain: string) => {
-  const { data } = await axios.get<IPluginResponse<IPluginDetail>>(
-    `${API_URL}/v1.0/domain/plugin/detail?domain=${domain}&plugin_id=${pluginId}`,
-  )
-
-  console.log(data, 'data ?')
+const getDomain = (url: string) => {
+  const domainArr = new URL(url).hostname.split('.')
+  return domainArr[domainArr.length - 2] + '.' + domainArr[domainArr.length - 1]
 }
 
 const AnalysisScreen = () => {
   const [plugins, setPlugins] = useState<IPluginListDetail[]>()
   const [isLoading, setIsLoading] = useState(true)
+  const [domain, setDomain] = useState('')
 
   useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
@@ -38,11 +36,11 @@ const AnalysisScreen = () => {
         if (tabs.length > 0 && tabs[0].url) {
           // Get the URL and display it in the popup HTML
           const url = tabs[0].url
-
           if (url) {
-            const domain = new URL(url).hostname
-            const plugins = await getPlugins(domain)
+            const domainStr = getDomain(url)
+            const plugins = await getPlugins(domainStr)
             setPlugins(plugins)
+            setDomain(domainStr)
           }
           setIsLoading(false)
         }
@@ -57,16 +55,9 @@ const AnalysisScreen = () => {
     <Box pos="relative">
       <Text>Welcome to analysis screen</Text>
       <Stack spacing="24px">
-        <PluginDetail />
-        <PluginDetail />
-        <PluginDetail />
-        <PluginDetail />
-        <PluginDetail />
-        <PluginDetail />
-        <PluginDetail />
-        <PluginDetail />
-        <PluginDetail />
-        <PluginDetail />
+        {plugins?.map((plugin) => (
+          <PluginDetail key={plugin.plugin_id} plugin={plugin} domain={domain}/>
+        ))}
       </Stack>
     </Box>
   )
