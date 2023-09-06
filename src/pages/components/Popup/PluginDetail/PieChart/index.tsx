@@ -2,7 +2,10 @@ import React, { useMemo } from 'react'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
 import { Pie } from 'react-chartjs-2'
 
-import { IPluginDetail } from '../../Screens/AnalysisScreen/types'
+import {
+  IDatePieChart,
+  IPluginDetail,
+} from '../../Screens/AnalysisScreen/types'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -22,14 +25,24 @@ const PieChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
     }
   }, [pluginDetail.title])
 
-  const labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']
+  const chartData: IDatePieChart[] = useMemo(() => {
+    return pluginDetail.data as IDatePieChart[]
+  }, [pluginDetail])
+
+  const totalData = useMemo(() => {
+    return chartData[0].row_data.reduce(function (a, b) {
+      return a + b
+    })
+  }, [chartData])
 
   const data = {
-    labels: labels,
+    labels: chartData[0].label,
     datasets: [
       {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        label: pluginDetail.title,
+        data: chartData[0].row_data.map((r) =>
+          Number(((100 * r) / totalData).toFixed(2)),
+        ),
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',

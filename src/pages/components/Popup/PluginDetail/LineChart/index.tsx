@@ -12,7 +12,10 @@ import {
 import zoomPlugin from 'chartjs-plugin-zoom'
 import { Line } from 'react-chartjs-2'
 
-import { IPluginDetail } from '../../Screens/AnalysisScreen/types'
+import {
+  IDateLineChart,
+  IPluginDetail,
+} from '../../Screens/AnalysisScreen/types'
 import { checkType2ParseData } from '../ultils.chart'
 
 ChartJS.register(
@@ -63,17 +66,21 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
   //   'July',
   // ]
 
+  const chartData: IDateLineChart[] = useMemo(() => {
+    return pluginDetail.data as IDateLineChart[]
+  }, [pluginDetail])
+
   const data = useMemo(() => {
     return {
-      labels: pluginDetail.data[0].row_data.map((d) =>
+      labels: chartData[0].row_data.map((d) =>
         checkType2ParseData(
-          pluginDetail.data[0].x_field,
-          d[pluginDetail.data[0].x_field],
+          chartData[0].x_field,
+          d[chartData[0].x_field],
         ),
       ),
-      datasets: pluginDetail.data.map((line) => ({
+      datasets: chartData.map((line) => ({
         label: line.label,
-        data: line.row_data.map((point) => point[pluginDetail.data[0].y_field]),
+        data: line.row_data.map((point) => point[chartData[0].y_field]),
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       })),

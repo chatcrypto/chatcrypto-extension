@@ -6,16 +6,22 @@ export interface IPluginListDetail {
   tags: string[]
 }
 
+export interface IDateLineChart {
+  label: string
+  row_data: {
+    [key: string]: any
+  }[]
+  x_field: string
+  y_field: string
+}
+
+export interface IDatePieChart {
+  label: string[]
+  row_data: number[]
+}
 export interface IPluginDetail {
   chart_type: string
-  data: {
-    label: string,
-    row_data: {
-      [key: string]: any
-    }[]
-    x_field: string
-    y_field: string
-  }[]
+  data: IDateLineChart[] | IDatePieChart[]
   debug_plugin_metadata: Record<any, any>
   debug_plugin_name: Record<any, any>
   description: string
@@ -36,4 +42,5 @@ export interface IPluginDetailResponse<T> {
 
 export enum PluginType {
   LineChart = 'line',
+  PieChart = 'pie',
 }

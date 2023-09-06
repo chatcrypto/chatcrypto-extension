@@ -84,8 +84,11 @@ const PluginDetail = ({
             {pluginDetail?.chart_type === PluginType.LineChart && (
               <LineChart pluginDetail={pluginDetail} />
             )}
-            {pluginDetail && <VerticalBarChart pluginDetail={pluginDetail} />}
-            {pluginDetail && <PieChart pluginDetail={pluginDetail} />}
+            {pluginDetail?.chart_type === PluginType.PieChart && (
+              <PieChart pluginDetail={pluginDetail} />
+            )}
+            {/* {pluginDetail && <VerticalBarChart pluginDetail={pluginDetail} />}
+            {pluginDetail && <PieChart pluginDetail={pluginDetail} />} */}
           </>
         )}
       </Box>
