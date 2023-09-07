@@ -86,7 +86,7 @@ export default createStyles((theme) => ({
   table: {
     borderCollapse: 'separate',
     borderSpacing: 0,
-    minWidth: '900px',
+    minWidth: '400px',
     maxWidth: '1200px',
     'tr th, tr td': {
       borderBottom: '1px solid #D8D8D8',

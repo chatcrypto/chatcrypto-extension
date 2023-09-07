@@ -39,7 +39,7 @@ const useStyles = createStyles((theme) => ({
     bottom: 0,
     left: 0,
     right: 0,
-    height: '110px',
+    height: '90px',
     width: '100%',
     boxShadow: '0px -4px 8px 0px rgba(0, 0, 0, 0.05)',
     backgroundColor: 'white',
@@ -257,25 +257,6 @@ const ChatSession = ({ initMessage }: { initMessage: string }) => {
             }
             placeholder="Ask or search anything you need to know about web3..."
           />
-          <Space h="8px" />
-          <Text
-            size="sm"
-            sx={{
-              color: '#8B8B8B',
-            }}
-          >
-            Check out our{' '}
-            <Text
-              fw={700}
-              sx={{
-                color: '#1990FF',
-                display: 'inline',
-              }}
-            >
-              Prompt Library{' '}
-            </Text>
-            for inspiration
-          </Text>
         </Flex>
       </Box>
     </Box>
