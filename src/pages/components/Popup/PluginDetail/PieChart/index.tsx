@@ -6,6 +6,7 @@ import {
   IDatePieChart,
   IPluginDetail,
 } from '../../Screens/AnalysisScreen/types'
+import { COLORS_CHART } from '../constants'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -16,10 +17,25 @@ const PieChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
       plugins: {
         legend: {
           position: 'top' as const,
+          // align: 'start',
         },
         title: {
           display: true,
           text: pluginDetail.title,
+          // align: 'start',
+          font: {
+            weight: 'bold',
+            size: 16,
+          },
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context: any) {
+              return `${context.dataset.label}: ${
+                context.dataset.rawData[context.dataIndex]
+              }`
+            },
+          },
         },
       },
     }
@@ -43,28 +59,19 @@ const PieChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
         data: chartData[0].row_data.map((r) =>
           Number(((100 * r) / totalData).toFixed(2)),
         ),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
+        rawData: chartData[0].row_data,
+        backgroundColor: COLORS_CHART,
         borderWidth: 1,
       },
     ],
   }
 
-  return <Pie data={data} options={options} />
+  return (
+    <Pie
+      data={data}
+      options={options as any}
+    />
+  )
 }
 
 export default PieChart

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
 import VisibilitySensor from 'react-visibility-sensor'
 
-import { Box, createStyles,Flex, Loader, Skeleton, Stack } from '@mantine/core'
+import { Box, createStyles, Skeleton, Stack } from '@mantine/core'
 
 import { API_URL } from '~/constants'
 
@@ -18,12 +18,16 @@ import PieChart from './PieChart'
 import VerticalBarChart from './VerticalBarChart'
 
 const useStyles = createStyles((theme) => ({
-  pluginWrapper: {
+  boxWrapper: {
     borderRadius: '16px',
     border: '1px solid #eaeaea',
     padding: '24px',
     backgroundColor: 'white',
     marginTop: '20px',
+    canvas: {
+      width: '100% !important',
+      height: '100% !important',
+    },
   },
 }))
 
@@ -42,7 +46,7 @@ const PluginGraph = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
   }
 
   return (
-    <Box className={classes.pluginWrapper}>
+    <Box className={classes.boxWrapper}>
       {pluginDetail?.chart_type === PluginType.LineChart && (
         <LineChart pluginDetail={pluginDetail} />
       )}
@@ -95,7 +99,7 @@ const PluginDetail = ({
       partialVisibility
     >
       {isLoading || !pluginDetail ? (
-        <Box className={classes.pluginWrapper}>
+        <Box className={classes.boxWrapper}>
           <Stack w="100%" spacing="24px">
             <Skeleton height={100} width="100%" radius="xs" />
             <Skeleton height={100} width="100%" radius="xs" />
