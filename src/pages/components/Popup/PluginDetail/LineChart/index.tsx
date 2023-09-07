@@ -120,6 +120,15 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
             mode: 'xy',
           },
         },
+        tooltip: {
+          callbacks: {
+            label: function (context: any) {
+              return `${context.dataset.label}: ${
+                checkType2ParseData(chartData[0].x_field, context.dataset.data[context.dataIndex].x)
+              } : ${context.dataset.data[context.dataIndex].y}`
+            },
+          },
+        },
       },
     }
   }, [pluginDetail.title, chartData])
@@ -138,8 +147,6 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
       })),
     }
   }, [pluginDetail])
-
-  console.log(data, 'data')
 
   const chartRef = useRef(null)
   const handleResetZoom = () => {

@@ -7,7 +7,6 @@ import {
   IPluginDetail,
 } from '../../Screens/AnalysisScreen/types'
 import { COLORS_CHART } from '../constants'
-
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 const PieChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {

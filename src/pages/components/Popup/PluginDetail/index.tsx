@@ -13,6 +13,7 @@ import {
   PluginType,
 } from '../Screens/AnalysisScreen/types'
 
+import GroupedBarChart from './GroupedBarChart'
 import LineChart from './LineChart'
 import PieChart from './PieChart'
 import VerticalBarChart from './VerticalBarChart'
@@ -27,7 +28,7 @@ const useStyles = createStyles(
       canvas: {
         width: '100% !important',
         height: isLineChart ? 'auto !important' : '100% !important',
-        aspectRatio: isLineChart ? '0.8' : '1',
+        aspectRatio: isLineChart ? '0.8' : 'unset',
       },
     },
   }),
@@ -56,6 +57,9 @@ const PluginGraph = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
       )}
       {pluginDetail?.chart_type === PluginType.PieChart && (
         <PieChart pluginDetail={pluginDetail} />
+      )}
+      {pluginDetail?.chart_type === PluginType.GroupedBarChart && (
+        <GroupedBarChart pluginDetail={pluginDetail} />
       )}
     </Box>
   )
