@@ -53,7 +53,7 @@ const CellValue = ({
     return <>{dayjs(value).format('HH:mm MMM-D-YY ')}</>
   }
 
-  if (column === 'Hash' || column === 'Sender' || column === 'Receiver') {
+  if (column === 'Hash' || column === 'Sender' || column === 'Receiver' || column === 'Account') {
     return (
       <Flex align="center">
         <Tooltip label={value as string}>
