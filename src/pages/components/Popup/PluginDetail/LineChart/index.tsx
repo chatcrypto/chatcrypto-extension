@@ -1,6 +1,5 @@
 import React, { useMemo, useRef } from 'react'
 import {
-  CategoryScale,
   Chart as ChartJS,
   Legend,
   LinearScale,
@@ -27,17 +26,6 @@ import {
 } from '../../Screens/AnalysisScreen/types'
 import { COLORS_CHART } from '../constants'
 import { checkType2ParseData } from '../ultils.chart'
-
-// ChartJS.register(
-//   zoomPlugin,
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-// )
 
 ChartJS.register(
   zoomPlugin,
@@ -90,6 +78,7 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
   const options = useMemo(() => {
     return {
       responsive: true,
+      maintainAspectRatio: false,
       // scales: scales,
       scales: {
         x: {
@@ -168,7 +157,7 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
           className={classes.resetIcon}
         />
       </MantineTooltip>
-      <Line options={options as any} data={data} ref={chartRef} />
+      <Scatter options={options as any} data={data} ref={chartRef} />
     </Flex>
   )
 }

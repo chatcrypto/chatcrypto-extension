@@ -17,18 +17,21 @@ import LineChart from './LineChart'
 import PieChart from './PieChart'
 import VerticalBarChart from './VerticalBarChart'
 
-const useStyles = createStyles((theme) => ({
-  boxWrapper: {
-    borderRadius: '16px',
-    border: '1px solid #eaeaea',
-    padding: '24px',
-    backgroundColor: 'white',
-    canvas: {
-      width: '100% !important',
-      height: '100% !important',
+const useStyles = createStyles(
+  (theme, { isLineChart }: { isLineChart?: boolean }) => ({
+    boxWrapper: {
+      borderRadius: '16px',
+      border: '1px solid #eaeaea',
+      padding: '24px',
+      backgroundColor: 'white',
+      canvas: {
+        width: '100% !important',
+        height: isLineChart ? 'auto !important' : '100% !important',
+        aspectRatio: isLineChart ? '0.8' : '1',
+      },
     },
-  },
-}))
+  }),
+)
 
 const getPluginDetail = async (pluginId: string, domain: string) => {
   const { data } = await axios.get<IPluginDetailResponse<IPluginDetail>>(
@@ -39,7 +42,9 @@ const getPluginDetail = async (pluginId: string, domain: string) => {
 
 const PluginGraph = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
   const { data } = pluginDetail
-  const { classes } = useStyles()
+  const { classes } = useStyles({
+    isLineChart: pluginDetail?.chart_type === PluginType.LineChart,
+  })
   if (data === 'No Data') {
     return null
   }
@@ -66,7 +71,7 @@ const PluginDetail = ({
   const [pluginDetail, setPluginDetai] = useState<IPluginDetail>()
   const [isVisibilitySensorActive, setIsVisibilitySensorActive] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
-  const { classes } = useStyles()
+  const { classes } = useStyles({})
   const onHandleVisibilityChange = (isVisible: boolean) => {
     if (!isVisible) return
     setIsVisibilitySensorActive(false)
