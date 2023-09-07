@@ -1,3 +1,5 @@
+import { color } from 'framer-motion'
+
 import { createStyles } from '@mantine/core'
 
 export default createStyles((theme) => ({
@@ -7,7 +9,7 @@ export default createStyles((theme) => ({
   },
   secondaryPaperStyle: {
     backgroundColor: theme.colors.background[0],
-    padding: '12px 24px',
+    padding: '12px',
     flex: 1,
     overflowX: 'hidden',
     overflowY: 'hidden',
@@ -70,7 +72,6 @@ export default createStyles((theme) => ({
     wordBreak: 'break-word',
   },
   tableWrapper: {
-    marginTop: '16px',
     maxWidth: '100%',
     overflowX: 'scroll',
     '@media (max-width: 1100px)': {
@@ -78,6 +79,9 @@ export default createStyles((theme) => ({
       overflowX: 'scroll',
       overflowY: 'hidden',
     },
+    '&::-webkit-scrollbar': {
+      height: '8px'
+    }
   },
   table: {
     borderCollapse: 'separate',
@@ -108,7 +112,7 @@ export default createStyles((theme) => ({
       },
     },
     'tr td': {
-      padding: '16px 24px',
+      padding: '6px 8px',
       whiteSpace: 'nowrap',
     },
 
@@ -148,6 +152,6 @@ export default createStyles((theme) => ({
     fontSize: '12px',
     fontWeight: 500,
     lineHeight: '18px',
-    padding: '12px 24px',
+    padding: '8px 12px',
   },
 }))

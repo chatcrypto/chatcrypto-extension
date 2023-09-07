@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useMemo } from 'react'
+import dayjs from 'dayjs'
 import ReactDOMServer from 'react-dom/server'
 import Typewriter from 'typewriter-effect'
 
-import { Anchor, Badge, Box, Flex, Paper, Text } from '@mantine/core'
+import { Anchor, Badge, Box, Flex, Paper, Text, Tooltip } from '@mantine/core'
 
 import { ChatContext } from '~/pages/context/Popup/ChatContext'
 import { setBotChatting } from '~/pages/context/Popup/ChatContext/reducer'
@@ -10,11 +11,12 @@ import {
   CHART_TYPE,
   ChartMessage,
 } from '~/pages/context/Popup/ChatContext/types'
+import { formatAccAddress } from '~/utils/formatAccAddress'
+import { formatFunctionString } from '~/utils/formatFunctionString'
 
-import { BotIcon } from '../../common/Svg'
+import CopyToClipBoardButton from '../../common/CopyToClipboardButton'
 
 import useStyles from './styles'
-
 interface ITableUI {
   data: {
     row_data: string[][]
@@ -37,6 +39,68 @@ interface IListUI {
   onHandleBotChatStarting: () => void
   messageStatus: boolean
   onHandleFinishRenderingMessage: () => void
+}
+
+const CellValue = ({
+  column,
+  value,
+}: {
+  column: string
+  value: string | number
+}) => {
+  const { classes } = useStyles()
+  if (column === 'Time') {
+    return <>{dayjs(value).format('HH:mm MMM-D-YY ')}</>
+  }
+
+  if (column === 'Hash' || column === 'Sender' || column === 'Receiver') {
+    return (
+      <Flex align="center">
+        <Tooltip label={value as string}>
+          <Text>{formatAccAddress(value as string)}</Text>
+        </Tooltip>
+        <CopyToClipBoardButton isOnlyIcon value={value as string} />
+      </Flex>
+    )
+  }
+
+  if (column === 'Function') {
+    const functionString = formatFunctionString(value as string)
+
+    return (
+      <Flex>
+        <Box
+          sx={{
+            borderRadius: '12px',
+            padding: '0px 10px',
+            width: 'fit-content',
+            backgroundColor: '#e9edff',
+          }}
+        >
+          {functionString}
+        </Box>
+        <CopyToClipBoardButton isOnlyIcon value={value as string} />
+      </Flex>
+    )
+  }
+
+  if (column === 'Success') {
+    if (value) {
+      return <Badge color='green' sx={{
+        padding: '4px 6px'
+      }}>
+        Success
+      </Badge>
+    }
+
+    return <Badge color='red' sx={{
+      padding: '4px 6px'
+    }}>
+      Fail
+    </Badge>
+  }
+
+  return <>{value}</>
 }
 
 const TableUI = ({
@@ -77,7 +141,7 @@ const TableUI = ({
           }
           return (
             <td key={cIndex} className={classes.tableMainText}>
-              {v}
+              <CellValue value={v} column={table_header[cIndex]} />
             </td>
           )
         })}
@@ -258,7 +322,7 @@ const GraphMessage = ({
   onHandleFinishRenderingMessage: () => void
 }) => {
   const { classes } = useStyles()
-  const { state, dispatch } = useContext(ChatContext)
+  const { dispatch } = useContext(ChatContext)
   const { description, title, chart_type, data, referencer } = message
 
   const onHandleBotChatStarting = () => {
@@ -271,11 +335,6 @@ const GraphMessage = ({
 
   return (
     <Flex gap={16} align="flex-start">
-      <BotIcon
-        style={{
-          alignSelf: 'flex-start',
-        }}
-      />
       <Paper className={classes.secondaryPaperStyle}>
         {chart_type === CHART_TYPE.TABLE && (
           <TableUI

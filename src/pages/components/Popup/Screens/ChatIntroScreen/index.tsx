@@ -118,24 +118,6 @@ const ChatIntroScreen = () => {
               />
             )
           })}
-          {suggestions.map((suggestion) => {
-            return (
-              <TrendingCard
-                title="Token Tracking"
-                content={suggestion.text}
-                onClick={() => onTriggerChatMode(suggestion.text)}
-              />
-            )
-          })}
-          {suggestions.map((suggestion) => {
-            return (
-              <TrendingCard
-                title="Token Tracking"
-                content={suggestion.text}
-                onClick={() => onTriggerChatMode(suggestion.text)}
-              />
-            )
-          })}
         </SimpleGrid>
       )}
 
