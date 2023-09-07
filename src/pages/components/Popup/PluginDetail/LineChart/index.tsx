@@ -12,7 +12,8 @@ import {
 import zoomPlugin from 'chartjs-plugin-zoom'
 import { Line } from 'react-chartjs-2'
 
-import { Button } from '@mantine/core'
+import { Button, Flex, rem } from '@mantine/core'
+import { IconRefresh } from '@tabler/icons-react'
 
 import {
   IDateLineChart,
@@ -128,10 +129,10 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
   }
 
   return (
-    <>
+    <Flex direction='column' align='flex-end'>
+      <Button onClick={handleResetZoom} variant='outline'><IconRefresh size={rem(20)}/></Button>
       <Line options={options as any} data={data} ref={chartRef}/>
-      <Button onClick={handleResetZoom}>Reset Zoom</Button>
-    </>
+    </Flex>
   )
 }
 
