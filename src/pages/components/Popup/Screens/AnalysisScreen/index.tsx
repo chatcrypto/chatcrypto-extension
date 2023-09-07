@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import { Box, Stack, Text } from '@mantine/core'
@@ -7,7 +7,7 @@ import { API_URL } from '~/constants'
 
 import PluginDetail from '../../PluginDetail'
 
-import { IPluginDetail, IPluginListDetail, IPluginResponse } from './types'
+import { IPluginListDetail, IPluginResponse } from './types'
 
 const getPlugins = async (domain: string) => {
   const { data } = await axios.get<IPluginResponse<IPluginListDetail>>(
@@ -56,7 +56,11 @@ const AnalysisScreen = () => {
       <Text>Welcome to analysis screen</Text>
       <Stack spacing="24px">
         {plugins?.map((plugin) => (
-          <PluginDetail key={plugin.plugin_id} plugin={plugin} domain={domain}/>
+          <PluginDetail
+            key={plugin.plugin_id}
+            plugin={plugin}
+            domain={domain}
+          />
         ))}
       </Stack>
     </Box>

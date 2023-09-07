@@ -178,7 +178,7 @@ const ChatSession = ({ initMessage }: { initMessage: string }) => {
   }
 
   const { sendMessage } = useWebSocket(
-    `${WEBSOCKET_URL}/chat/ws/${googleAccount?.token}`,
+    `${WEBSOCKET_URL}/chat/ws/${googleAccount?.token}?network=aptos`,
     {
       onMessage: onHandleReceiveMessage,
       onError: (e) => {

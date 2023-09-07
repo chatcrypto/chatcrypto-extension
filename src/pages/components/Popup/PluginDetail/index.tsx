@@ -39,12 +39,11 @@ const PluginDetail = ({
     setIsVisibilitySensorActive(false)
   }
 
-  console.log(pluginDetail, 'pluginDetail')
-
   const fetchPlugin = useCallback(async () => {
     try {
       if (plugin.plugin_id && domain) {
         const pluginRes = await getPluginDetail(plugin.plugin_id, domain)
+        console.log(pluginRes, 'RES ?')
         setPluginDetai(pluginRes)
       }
       setIsLoading(false)

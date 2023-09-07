@@ -8,9 +8,11 @@ import { setMessageDoneRendering } from '~/pages/context/Popup/ChatContext/reduc
 import {
   CHART_TYPE,
   IMessageDetail,
+  ISourceCodeMessage,
 } from '~/pages/context/Popup/ChatContext/types'
 
 import GraphMessage from './GraphMessage'
+import SourceCodeMessage from './SourceCodeMessage'
 import useStyles from './styles'
 import TextMessage, { BotMessageWrapper } from './TextMessage'
 
@@ -99,6 +101,18 @@ const Message = ({
                 </>
               )
             }
+
+            if (m.chart_type === CHART_TYPE.SOURCE_CODE) {
+              return (
+                <SourceCodeMessage
+                  message={m as unknown as ISourceCodeMessage}
+                  onHandleFinishRenderingMessage={() =>
+                    onHandleFinishRenderingMessage(id)
+                  }
+                />
+              )
+            }
+
             return (
               <>
                 <GraphMessage

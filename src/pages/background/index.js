@@ -62,7 +62,7 @@ function injectedFunction() {
     document.body.appendChild(containerEl)
   } else {
     if (chatContainerEl.style.width === '0px') {
-      chatContainerEl.style.width = '450px'
+      chatContainerEl.style.width = '650px'
     } else {
       chatContainerEl.style.width = '0px'
     }
@@ -87,7 +87,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
           console.log('script triggered ?')
           const chatContainerEl = document.getElementById('chat-container')
           if (chatContainerEl) {
-            if (chatContainerEl.style.width === '450px') {
+            if (chatContainerEl.style.width === '650px') {
               chatContainerEl.style.width = '0px'
             }
           }

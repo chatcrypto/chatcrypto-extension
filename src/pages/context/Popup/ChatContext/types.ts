@@ -4,6 +4,7 @@ export enum CHART_TYPE {
   BAR = 'bar',
   LIST = 'list',
   TEXT = 'text',
+  SOURCE_CODE = 'source_code'
 }
 
 export interface ChartMessage {
@@ -11,6 +12,21 @@ export interface ChartMessage {
   data: {
     row_data: string[][]
     table_header: string[]
+  }
+  description: string
+  is_raw: boolean
+  method: string
+  model_type: string
+  referencer: string
+  title: string
+  tool: string
+}
+
+export interface ISourceCodeMessage {
+  chart_type: CHART_TYPE.SOURCE_CODE
+  data: {
+    code: string
+    language: string
   }
   description: string
   is_raw: boolean
