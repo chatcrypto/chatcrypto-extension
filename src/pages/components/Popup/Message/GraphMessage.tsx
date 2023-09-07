@@ -53,7 +53,12 @@ const CellValue = ({
     return <>{dayjs(value).format('HH:mm MMM-D-YY ')}</>
   }
 
-  if (column === 'Hash' || column === 'Sender' || column === 'Receiver' || column === 'Account') {
+  if (
+    column === 'Hash' ||
+    column === 'Sender' ||
+    column === 'Receiver' ||
+    column === 'Account'
+  ) {
     return (
       <Flex align="center">
         <Tooltip label={value as string}>
@@ -85,19 +90,7 @@ const CellValue = ({
   }
 
   if (column === 'Success') {
-    if (value) {
-      return <Badge color='green' sx={{
-        padding: '4px 6px'
-      }}>
-        Success
-      </Badge>
-    }
-
-    return <Badge color='red' sx={{
-      padding: '4px 6px'
-    }}>
-      Fail
-    </Badge>
+    return <>{JSON.stringify(value)}</>
   }
 
   return <>{value}</>
