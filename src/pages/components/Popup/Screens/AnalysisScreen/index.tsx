@@ -57,7 +57,7 @@ const AnalysisScreen = () => {
         fontWeight: 700,
         fontSize: rem(20)
       })}>Welcome to analysis screen</Text>
-      <Stack spacing="24px">
+      <Stack spacing="24px" mt="24px">
         {plugins?.map((plugin) => (
           <PluginDetail
             key={plugin.plugin_id}

@@ -23,7 +23,6 @@ const useStyles = createStyles((theme) => ({
     border: '1px solid #eaeaea',
     padding: '24px',
     backgroundColor: 'white',
-    marginTop: '20px',
     canvas: {
       width: '100% !important',
       height: '100% !important',

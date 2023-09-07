@@ -16,12 +16,7 @@ const ChatRoute = () => {
   if (accessToken) {
     return <ChatIntroScreen />
   }
-  return (
-    <>
-      <Features />
-      <GoogleLoginButton />
-    </>
-  )
+  return <GoogleLoginButton />
 }
 
 const router = createHashRouter([

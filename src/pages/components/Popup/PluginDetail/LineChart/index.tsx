@@ -12,7 +12,13 @@ import {
 import zoomPlugin from 'chartjs-plugin-zoom'
 import { Line } from 'react-chartjs-2'
 
-import { Button, Flex, rem } from '@mantine/core'
+import {
+  Button,
+  createStyles,
+  Flex,
+  rem,
+  Tooltip as MantineTooltip,
+} from '@mantine/core'
 import { IconRefresh } from '@tabler/icons-react'
 
 import {
@@ -33,7 +39,16 @@ ChartJS.register(
   Legend,
 )
 
+const useStyles = createStyles(() => ({
+  resetIcon: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+}))
+
 const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
+  const { classes } = useStyles()
   const scaleOpts = {
     grid: {
       // borderColor: Utils.randomColor(1),
@@ -129,9 +144,15 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
   }
 
   return (
-    <Flex direction='column' align='flex-end'>
-      <Button onClick={handleResetZoom} variant='outline'><IconRefresh size={rem(20)}/></Button>
-      <Line options={options as any} data={data} ref={chartRef}/>
+    <Flex direction="column" align="flex-end">
+      <MantineTooltip label="Reset zoom">
+        <IconRefresh
+          onClick={handleResetZoom}
+          size={rem(16)}
+          className={classes.resetIcon}
+        />
+      </MantineTooltip>
+      <Line options={options as any} data={data} ref={chartRef} />
     </Flex>
   )
 }
