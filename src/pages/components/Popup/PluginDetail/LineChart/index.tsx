@@ -118,7 +118,7 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
     }
   }, [pluginDetail])
 
-  return <Line options={options as any} data={data} />
+  return <Line options={options as any} data={data}/>
 }
 
 export default LineChart

@@ -31,7 +31,9 @@ const PieChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
         tooltip: {
           callbacks: {
             label: function (context: any) {
-              return `${context.dataset.label}: ${context.dataset.rawData[context.dataIndex]}`
+              return `${context.dataset.label}: ${
+                context.dataset.rawData[context.dataIndex]
+              }`
             },
           },
         },
@@ -64,7 +66,12 @@ const PieChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
     ],
   }
 
-  return <Pie data={data} options={options as any} />
+  return (
+    <Pie
+      data={data}
+      options={options as any}
+    />
+  )
 }
 
 export default PieChart

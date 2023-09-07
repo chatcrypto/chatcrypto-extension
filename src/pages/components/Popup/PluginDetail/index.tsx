@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
 import VisibilitySensor from 'react-visibility-sensor'
 
-import { Box, Flex, Loader } from '@mantine/core'
+import { Box, createStyles, Flex, Loader } from '@mantine/core'
 
 import { API_URL } from '~/constants'
 
@@ -24,6 +24,15 @@ const getPluginDetail = async (pluginId: string, domain: string) => {
   return data.data
 }
 
+const useStyles = createStyles((theme) => ({
+  boxWrapper: {
+    canvas: {
+      width: '100% !important',
+      height: '100% !important',
+    },
+  },
+}))
+
 const PluginDetail = ({
   plugin,
   domain,
@@ -31,6 +40,7 @@ const PluginDetail = ({
   plugin: IPluginListDetail
   domain: string
 }) => {
+  const { classes } = useStyles()
   const [pluginDetail, setPluginDetai] = useState<IPluginDetail>()
   const [isVisibilitySensorActive, setIsVisibilitySensorActive] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
@@ -66,6 +76,7 @@ const PluginDetail = ({
       partialVisibility
     >
       <Box
+        className={classes.boxWrapper}
         sx={{
           borderRadius: '16px',
           border: '1px solid #eaeaea',
