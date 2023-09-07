@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
 import VisibilitySensor from 'react-visibility-sensor'
 
-import { Box, Flex, Loader } from '@mantine/core'
+import { Box, createStyles,Flex, Loader, Skeleton, Stack } from '@mantine/core'
 
 import { API_URL } from '~/constants'
 
@@ -17,11 +17,40 @@ import LineChart from './LineChart'
 import PieChart from './PieChart'
 import VerticalBarChart from './VerticalBarChart'
 
+const useStyles = createStyles((theme) => ({
+  pluginWrapper: {
+    borderRadius: '16px',
+    border: '1px solid #eaeaea',
+    padding: '24px',
+    backgroundColor: 'white',
+    marginTop: '20px',
+  },
+}))
+
 const getPluginDetail = async (pluginId: string, domain: string) => {
   const { data } = await axios.get<IPluginDetailResponse<IPluginDetail>>(
     `${API_URL}/v1.0/domain/plugin/detail?domain=${domain}&plugin_id=${pluginId}`,
   )
   return data.data
+}
+
+const PluginGraph = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
+  const { data } = pluginDetail
+  const { classes } = useStyles()
+  if (data === 'No Data') {
+    return null
+  }
+
+  return (
+    <Box className={classes.pluginWrapper}>
+      {pluginDetail?.chart_type === PluginType.LineChart && (
+        <LineChart pluginDetail={pluginDetail} />
+      )}
+      {pluginDetail?.chart_type === PluginType.PieChart && (
+        <PieChart pluginDetail={pluginDetail} />
+      )}
+    </Box>
+  )
 }
 
 const PluginDetail = ({
@@ -34,6 +63,7 @@ const PluginDetail = ({
   const [pluginDetail, setPluginDetai] = useState<IPluginDetail>()
   const [isVisibilitySensorActive, setIsVisibilitySensorActive] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
+  const { classes } = useStyles()
   const onHandleVisibilityChange = (isVisible: boolean) => {
     if (!isVisible) return
     setIsVisibilitySensorActive(false)
@@ -43,7 +73,6 @@ const PluginDetail = ({
     try {
       if (plugin.plugin_id && domain) {
         const pluginRes = await getPluginDetail(plugin.plugin_id, domain)
-        console.log(pluginRes, 'RES ?')
         setPluginDetai(pluginRes)
       }
       setIsLoading(false)
@@ -65,32 +94,16 @@ const PluginDetail = ({
       active={isVisibilitySensorActive}
       partialVisibility
     >
-      <Box
-        sx={{
-          borderRadius: '16px',
-          border: '1px solid #eaeaea',
-          padding: '24px',
-          backgroundColor: 'white',
-          marginTop: '20px',
-        }}
-      >
-        {isLoading ? (
-          <Flex w="100%" justify="center" align="center">
-            <Loader />
-          </Flex>
-        ) : (
-          <>
-            {pluginDetail?.chart_type === PluginType.LineChart && (
-              <LineChart pluginDetail={pluginDetail} />
-            )}
-            {pluginDetail?.chart_type === PluginType.PieChart && (
-              <PieChart pluginDetail={pluginDetail} />
-            )}
-            {/* {pluginDetail && <VerticalBarChart pluginDetail={pluginDetail} />}
-            {pluginDetail && <PieChart pluginDetail={pluginDetail} />} */}
-          </>
-        )}
-      </Box>
+      {isLoading || !pluginDetail ? (
+        <Box className={classes.pluginWrapper}>
+          <Stack w="100%" spacing="24px">
+            <Skeleton height={100} width="100%" radius="xs" />
+            <Skeleton height={100} width="100%" radius="xs" />
+          </Stack>
+        </Box>
+      ) : (
+        <PluginGraph pluginDetail={pluginDetail} />
+      )}
     </VisibilitySensor>
   )
 }

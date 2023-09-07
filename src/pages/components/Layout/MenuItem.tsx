@@ -7,12 +7,13 @@ import { useHover } from '@mantine/hooks'
 const useStyles = createStyles(
   (
     theme,
-    { isActive, hovered }: { isActive?: boolean; hovered?: boolean },
+    { isActive }: { isActive?: boolean; hovered?: boolean },
   ) => ({
     textMenu: {
       fontSize: '15px',
       lineHeight: '24px',
       fontWeight: isActive ? 700 : 400,
+      color: `${isActive ? '#6F8AFE' : 'white'}`,
     },
     textLogo: {
       fontSize: theme.fontSizes.md,
@@ -22,7 +23,6 @@ const useStyles = createStyles(
       borderRadius: '12px',
       padding: '12px 16px',
       cursor: 'pointer',
-      backgroundColor: `${isActive ? '#E9EDFF' : 'transparent'}`,
       transition: 'all 0.2s ease-out',
     },
   }),

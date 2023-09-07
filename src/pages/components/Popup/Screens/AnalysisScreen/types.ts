@@ -21,7 +21,7 @@ export interface IDatePieChart {
 }
 export interface IPluginDetail {
   chart_type: string
-  data: IDateLineChart[] | IDatePieChart[]
+  data: IDateLineChart[] | IDatePieChart[] | string
   debug_plugin_metadata: Record<any, any>
   debug_plugin_name: Record<any, any>
   description: string

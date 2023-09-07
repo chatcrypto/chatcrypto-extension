@@ -119,38 +119,17 @@ const AppShell = ({ children }: { children: React.ReactNode }) => {
             </Box>
 
             <Flex align="center" gap="16px">
-              <Popover
-                width={230}
-                position="bottom"
-                shadow="md"
-                opened={opened}
-                trapFocus
-              >
-                <Popover.Target>
-                  <Box onClick={open}>
-                    <MenuDotIcon />
-                  </Box>
-                </Popover.Target>
-                <Popover.Dropdown
-                  sx={(theme) => ({
-                    padding: '16px',
-                  })}
-                >
-                  <Stack spacing="0px" ref={outsideRef}>
-                    {MenuItems.map((item) => (
-                      <MenuItem
-                        title={item.title}
-                        icon={item.icon}
-                        key={item.title}
-                        onHandleNavigate={() => {
-                          onHandleNavigate(item.routeName)
-                        }}
-                        isActive={currentPath === item.routeName}
-                      />
-                    ))}
-                  </Stack>
-                </Popover.Dropdown>
-              </Popover>
+              {MenuItems.map((item) => (
+                <MenuItem
+                  title={item.title}
+                  icon={item.icon}
+                  key={item.title}
+                  onHandleNavigate={() => {
+                    onHandleNavigate(item.routeName)
+                  }}
+                  isActive={currentPath === item.routeName}
+                />
+              ))}
               <CancelIcon onClick={onHandleCloseExtension} />
             </Flex>
           </Flex>
