@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useRef } from 'react'
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -11,6 +11,8 @@ import {
 } from 'chart.js'
 import zoomPlugin from 'chartjs-plugin-zoom'
 import { Line } from 'react-chartjs-2'
+
+import { Button } from '@mantine/core'
 
 import {
   IDateLineChart,
@@ -118,7 +120,19 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
     }
   }, [pluginDetail])
 
-  return <Line options={options as any} data={data}/>
+  const chartRef = useRef(null)
+  const handleResetZoom = () => {
+    if (chartRef && chartRef.current) {
+      (chartRef.current as any).resetZoom()
+    }
+  }
+
+  return (
+    <>
+      <Line options={options as any} data={data} ref={chartRef}/>
+      <Button onClick={handleResetZoom}>Reset Zoom</Button>
+    </>
+  )
 }
 
 export default LineChart
