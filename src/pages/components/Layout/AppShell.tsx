@@ -74,6 +74,7 @@ const AppShell = ({ children }: { children: React.ReactNode }) => {
         main: {
           paddingLeft: '16px',
           paddingRight: '16px',
+          width: '100%'
         },
       })}
       header={

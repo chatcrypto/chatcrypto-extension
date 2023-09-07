@@ -16,6 +16,7 @@ import {
   IDateLineChart,
   IPluginDetail,
 } from '../../Screens/AnalysisScreen/types'
+import { COLORS_CHART } from '../constants'
 import { checkType2ParseData } from '../ultils.chart'
 
 ChartJS.register(
@@ -30,16 +31,46 @@ ChartJS.register(
 )
 
 const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
+  const scaleOpts = {
+    grid: {
+      // borderColor: Utils.randomColor(1),
+      color: 'rgba( 0, 0, 0, 0.1)',
+    },
+    title: {
+      display: true,
+      // text: (ctx) => ctx.scale.axis + ' axis',
+    },
+  }
+  const scales: any = {
+    x: {
+      type: 'category',
+      min: 1,
+      max: 11,
+    },
+    y: {
+      type: 'linear',
+    },
+  }
+  Object.keys(scales).forEach((scale) =>
+    Object.assign(scales[scale], scaleOpts),
+  )
   const options = useMemo(() => {
     return {
       responsive: true,
+      scales: scales,
       plugins: {
         legend: {
           position: 'top' as const,
+          // align: 'start',
         },
         title: {
           display: true,
           text: pluginDetail.title,
+          // align: 'start',
+          font: {
+            weight: 'bold',
+            size: 16,
+          },
         },
         zoom: {
           zoom: {
@@ -51,10 +82,14 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
             },
             mode: 'xy',
           },
+          pan: {
+            enabled: true,
+            mode: 'xy',
+          },
         },
       },
     }
-  }, [pluginDetail.title])
+  }, [pluginDetail.title, scales])
 
   // const labels = [
   //   'January',
@@ -73,16 +108,12 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
   const data = useMemo(() => {
     return {
       labels: chartData[0].row_data.map((d) =>
-        checkType2ParseData(
-          chartData[0].x_field,
-          d[chartData[0].x_field],
-        ),
+        checkType2ParseData(chartData[0].x_field, d[chartData[0].x_field]),
       ),
-      datasets: chartData.map((line) => ({
+      datasets: chartData.map((line, index) => ({
         label: line.label,
         data: line.row_data.map((point) => point[chartData[0].y_field]),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        backgroundColor: COLORS_CHART[index],
       })),
     }
   }, [pluginDetail])

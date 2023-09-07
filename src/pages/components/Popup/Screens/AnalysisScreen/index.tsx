@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
 
-import { Box, Stack, Text } from '@mantine/core'
+import { Box, rem,Stack, Text } from '@mantine/core'
 
 import { API_URL } from '~/constants'
 
@@ -53,7 +53,10 @@ const AnalysisScreen = () => {
 
   return (
     <Box pos="relative">
-      <Text>Welcome to analysis screen</Text>
+      <Text sx={(theme) => ({
+        fontWeight: 700,
+        fontSize: rem(20)
+      })}>Welcome to analysis screen</Text>
       <Stack spacing="24px">
         {plugins?.map((plugin) => (
           <PluginDetail key={plugin.plugin_id} plugin={plugin} domain={domain}/>
