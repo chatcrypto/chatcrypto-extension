@@ -86,12 +86,18 @@ const CellValue = ({
 
   if (column === 'Success') {
     if (value) {
-      return <Box className={classes.badgeStyle}>
+      return <Badge color='green' sx={{
+        padding: '4px 6px'
+      }}>
         Success
-      </Box>
+      </Badge>
     }
 
-    return 'false'
+    return <Badge color='red' sx={{
+      padding: '4px 6px'
+    }}>
+      Fail
+    </Badge>
   }
 
   return <>{value}</>

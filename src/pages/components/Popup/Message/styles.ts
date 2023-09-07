@@ -112,7 +112,7 @@ export default createStyles((theme) => ({
       },
     },
     'tr td': {
-      padding: '8px 12px',
+      padding: '6px 8px',
       whiteSpace: 'nowrap',
     },
 
@@ -154,12 +154,4 @@ export default createStyles((theme) => ({
     lineHeight: '18px',
     padding: '8px 12px',
   },
-  badgeStyle: {
-    borderRadius: '12px',
-    padding: '2px 6px',
-    backgroundColor: '#6F8AFE',
-    color: '#fff',
-    fontWeight: 700,
-    fontSize: '12px'
-  }
 }))
