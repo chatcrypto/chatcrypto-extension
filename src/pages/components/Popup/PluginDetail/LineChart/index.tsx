@@ -63,8 +63,34 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
             callback: function (value: any, index: number, values: any) {
               return checkType2ParseData(chartData[0].x_field, value)
             },
+            font: {
+              size: 10
+            }
+          },
+          title: {
+            display: true,
+            text: chartData[0].x_label,
+            font: {
+              weight: 'bold',
+              size: 12
+            }
           },
         },
+        y: {
+          title: {
+            display: true,
+            text: chartData[0].y_label,
+            font: {
+              weight: 'bold',
+              size: 12
+            }
+          },
+          ticks: {
+            font: {
+              size: 10
+            }
+          }
+        }
       },
       plugins: {
         legend: {

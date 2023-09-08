@@ -85,9 +85,35 @@ const GroupedBarChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
       scales: {
         x: {
           stacked: true,
+          title: {
+            display: true,
+            text: chartData[0].x_label,
+            font: {
+              weight: 'bold',
+              size: 12
+            }
+          },
+          ticks: {
+            font: {
+              size: 10
+            }
+          }
         },
         y: {
           stacked: true,
+          title: {
+            display: true,
+            text: chartData[0].y_label,
+            font: {
+              weight: 'bold',
+              size: 12
+            }
+          },
+          ticks: {
+            font: {
+              size: 10
+            }
+          }
         },
       },
     }

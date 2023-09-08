@@ -13,6 +13,8 @@ export interface IDateLineChart {
   }[]
   x_field: string
   y_field: string
+  x_label: string
+  y_label: string
 }
 export interface IDateBarChart {
   label: string
@@ -21,6 +23,8 @@ export interface IDateBarChart {
   }[]
   x_field: string
   y_field: string
+  x_label: string
+  y_label: string
 }
 
 export interface IDatePieChart {
