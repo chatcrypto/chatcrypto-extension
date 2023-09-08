@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import { Box, rem, Stack, Text } from '@mantine/core'
+import { Box, Flex, rem, Stack, Text } from '@mantine/core'
+import { IconDatabaseOff } from '@tabler/icons-react'
 
 import { API_URL } from '~/constants'
 
@@ -64,15 +65,29 @@ const AnalysisScreen = () => {
         </Text>
       )}
 
-      <Stack spacing="24px" mt="24px">
-        {plugins?.map((plugin) => (
-          <PluginDetail
-            key={plugin.plugin_id}
-            plugin={plugin}
-            domain={domain}
-          />
-        ))}
-      </Stack>
+      {plugins ? (
+        <Stack spacing="24px" mt="24px">
+          {plugins?.map((plugin) => (
+            <PluginDetail
+              key={plugin.plugin_id}
+              plugin={plugin}
+              domain={domain}
+            />
+          ))}
+        </Stack>
+      ) : (
+        <Flex w="100%" justify="center" align="center" direction="column">
+          <IconDatabaseOff size={rem(24)} />
+          <Text
+            sx={(theme) => ({
+              fontWeight: 500,
+              fontSize: rem(14),
+            })}
+          >
+            No Data
+          </Text>
+        </Flex>
+      )}
     </Box>
   )
 }
