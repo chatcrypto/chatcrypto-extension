@@ -9,4 +9,8 @@ export const COLORS_CHART = [
   '#2B6664',
   '#CEEBE9',
   '#1A8784',
+  '#0081CF',
+  '#B0A8B9',
+  '#D5CABD',
+  '#4B4453'
 ]
