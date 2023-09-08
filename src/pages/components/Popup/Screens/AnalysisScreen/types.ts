@@ -6,6 +6,11 @@ export interface IPluginListDetail {
   tags: string[]
 }
 
+export interface IDataTablePlugin {
+  row_data: any[][]
+  table_header: string[]
+}
+
 export interface IDateLineChart {
   label: string
   row_data: {
@@ -33,7 +38,12 @@ export interface IDatePieChart {
 }
 export interface IPluginDetail {
   chart_type: string
-  data: IDateLineChart[] | IDatePieChart[] | string | IDateBarChart[]
+  data:
+    | IDateLineChart[]
+    | IDatePieChart[]
+    | string
+    | IDateBarChart[]
+    | IDataTablePlugin
   debug_plugin_metadata: Record<any, any>
   debug_plugin_name: Record<any, any>
   description: string
@@ -41,6 +51,7 @@ export interface IPluginDetail {
   success: boolean
   tags: string[]
   title: string
+  reference?: string
 }
 
 export interface IPluginResponse<T> {
@@ -56,4 +67,5 @@ export enum PluginType {
   LineChart = 'line',
   PieChart = 'pie',
   GroupedBarChart = 'grouped_bar',
+  Table = 'table',
 }

@@ -13,6 +13,7 @@ import {
   PluginType,
 } from '../Screens/AnalysisScreen/types'
 
+import GraphPlugin from './GraphPlugin'
 import GroupedBarChart from './GroupedBarChart'
 import LineChart from './LineChart'
 import PieChart from './PieChart'
@@ -44,8 +45,7 @@ const getPluginDetail = async (pluginId: string, domain: string) => {
 const PluginGraph = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
   const { data } = pluginDetail
   const { classes } = useStyles({
-    isWideChart:
-      pluginDetail?.chart_type === PluginType.LineChart,
+    isWideChart: pluginDetail?.chart_type === PluginType.LineChart,
   })
   if (data === 'No Data') {
     return null
@@ -61,6 +61,9 @@ const PluginGraph = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
       )}
       {pluginDetail?.chart_type === PluginType.GroupedBarChart && (
         <GroupedBarChart pluginDetail={pluginDetail} />
+      )}
+      {pluginDetail?.chart_type === PluginType.Table && (
+        <GraphPlugin pluginDetail={pluginDetail} />
       )}
     </Box>
   )

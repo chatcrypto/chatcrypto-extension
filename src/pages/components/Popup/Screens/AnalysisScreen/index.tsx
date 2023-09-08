@@ -56,7 +56,7 @@ const AnalysisScreen = () => {
       <Text sx={(theme) => ({
         fontWeight: 700,
         fontSize: rem(20)
-      })}>Welcome to analysis screen</Text>
+      })}>{domain} analysis</Text>
       <Stack spacing="24px" mt="24px">
         {plugins?.map((plugin) => (
           <PluginDetail

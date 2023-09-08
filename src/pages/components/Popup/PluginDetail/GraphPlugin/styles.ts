@@ -8,8 +8,8 @@ export default createStyles((theme) => ({
     padding: '12px 24px',
   },
   secondaryPaperStyle: {
-    backgroundColor: theme.colors.background[0],
-    padding: '12px',
+    // backgroundColor: theme.colors.background[0],
+    // padding: '12px',
     flex: 1,
     overflowX: 'hidden',
     overflowY: 'hidden',
@@ -89,11 +89,11 @@ export default createStyles((theme) => ({
     minWidth: '400px',
     maxWidth: '1200px',
     'tr th, tr td': {
-      borderBottom: '1px solid #D8D8D8',
+      // borderBottom: '1px solid #D8D8D8',
     },
 
     'tr td:last-child, tr th:last-child': {
-      borderRight: '1px solid #D8D8D8',
+      // borderRight: '1px solid #D8D8D8',
     },
 
     'tr th': {
@@ -117,30 +117,30 @@ export default createStyles((theme) => ({
     },
 
     'tr th:first-child, tr td:first-child': {
-      borderLeft: '1px solid #D8D8D8',
+      // borderLeft: '1px solid #D8D8D8',
     },
     'tr:first-child th': {
       background: '#eee',
-      borderTop: '1px solid #D8D8D8',
+      // borderTop: '1px solid #D8D8D8',
     },
 
     'tr:first-child th:first-child': {
-      borderTopLeftRadius: '12px',
+      // borderTopLeftRadius: '12px',
     },
 
     'tr:first-child th:last-child': {
-      borderTopRightRadius: '12px',
+      // borderTopRightRadius: '12px',
     },
     'tr:last-child td:first-child': {
-      borderBottomLeftRadius: '12px',
+      // borderBottomLeftRadius: '12px',
     },
     'tr:last-child td:last-child ': {
-      borderBottomRightRadius: '12px',
+      // borderBottomRightRadius: '12px',
     },
   },
   tableTitle: {
-    padding: '12px 16px !important',
-    textAlign: 'left',
+    paddingBottom: '12px !important',
+    textAlign: 'center',
     backgroundColor: 'white !important',
   },
   tableMainText: {
