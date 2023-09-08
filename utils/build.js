@@ -22,6 +22,10 @@ config.plugins = (config.plugins || []).concat(
   }),
 )
 
-webpack(config, function (err) {
+const compiler = webpack(config, function (err, stats) {
+  console.log(stats, 'stats ?')
   if (err) throw err
 })
+
+
+

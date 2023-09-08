@@ -94,6 +94,8 @@ const TextMessage = ({
       </Text>
     )
   }
+
+  return null
 }
 
 export default TextMessage

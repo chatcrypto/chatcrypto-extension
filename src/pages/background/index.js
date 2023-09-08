@@ -1,8 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { get } = require('lodash')
 
-const API_KEY = 'AIzaSyDdJpoy59g2F9gnzLMOb635KhCGZqCIilA'
-
 let user_signed_in = false
 
 function injectedFunction() {
