@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
+import { get } from 'lodash'
 
 import {
   Box,
@@ -55,7 +56,10 @@ const ChatIntroScreen = () => {
   const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false)
   const { state: chatState, dispatch: dispatchChatContext } =
     useContext(ChatContext)
-  const [currentChatMessage, setCurrentChatMessage] = useState('')
+  const { messageList } = chatState
+  const [currentChatMessage, setCurrentChatMessage] = useState(
+    get(messageList, '0.message', ''),
+  )
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,12 +74,6 @@ const ChatIntroScreen = () => {
     }
 
     fetchData()
-  }, [])
-
-  useEffect(() => {
-    return () => {
-      dispatchChatContext(setChatMode(false))
-    }
   }, [])
 
   const onTriggerChatMode = (message: string) => {

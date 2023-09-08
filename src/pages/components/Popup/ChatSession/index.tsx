@@ -73,18 +73,20 @@ const ChatSession = ({ initMessage }: { initMessage: string }) => {
   }, [messageList])
 
   useEffect(() => {
-    sendMessage(initMessage)
+    if (messageList.length <= 1) {
+      sendMessage(initMessage)
+      dispatchChatContext(
+        setMessageList([
+          {
+            type: 'user',
+            message: initMessage,
+            done: true,
+            id: uuidv4(),
+          },
+        ]),
+      )
+    }
     setCurrentChatMessage('')
-    dispatchChatContext(
-      setMessageList([
-        {
-          type: 'user',
-          message: initMessage,
-          done: true,
-          id: uuidv4(),
-        },
-      ]),
-    )
   }, [])
 
   const scrollToBottom = () => {
