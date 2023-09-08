@@ -65,28 +65,32 @@ const AnalysisScreen = () => {
         </Text>
       )}
 
-      {plugins ? (
-        <Stack spacing="24px" mt="24px">
-          {plugins?.map((plugin) => (
-            <PluginDetail
-              key={plugin.plugin_id}
-              plugin={plugin}
-              domain={domain}
-            />
-          ))}
-        </Stack>
-      ) : (
-        <Flex w="100%" justify="center" align="center" direction="column">
-          <IconDatabaseOff size={rem(24)} />
-          <Text
-            sx={(theme) => ({
-              fontWeight: 500,
-              fontSize: rem(14),
-            })}
-          >
-            No Data
-          </Text>
-        </Flex>
+      {!isLoading && (
+        <>
+          {plugins ? (
+            <Stack spacing="24px" mt="24px">
+              {plugins?.map((plugin) => (
+                <PluginDetail
+                  key={plugin.plugin_id}
+                  plugin={plugin}
+                  domain={domain}
+                />
+              ))}
+            </Stack>
+          ) : (
+            <Flex w="100%" justify="center" align="center" direction="column">
+              <IconDatabaseOff size={rem(24)} />
+              <Text
+                sx={(theme) => ({
+                  fontWeight: 500,
+                  fontSize: rem(14),
+                })}
+              >
+                No Data
+              </Text>
+            </Flex>
+          )}
+        </>
       )}
     </Box>
   )
