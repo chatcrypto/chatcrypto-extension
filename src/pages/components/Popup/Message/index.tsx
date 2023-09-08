@@ -132,6 +132,8 @@ const Message = ({
 
     return <BotMessageWrapper></BotMessageWrapper>
   }
+
+  return null
 }
 
 export default Message
