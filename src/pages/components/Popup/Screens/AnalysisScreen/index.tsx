@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import { Box, Flex, rem, Stack, Text } from '@mantine/core'
+import { Box, Flex, Image, rem, Stack, Text } from '@mantine/core'
 import { IconDatabaseOff } from '@tabler/icons-react'
 
 import { API_URL } from '~/constants'
 
+import NodataImg from '../../../../../assets/img/nodata.png'
 import PluginDetail from '../../PluginDetail'
 
 import { IPluginListDetail, IPluginResponse } from './types'
@@ -79,14 +80,16 @@ const AnalysisScreen = () => {
             </Stack>
           ) : (
             <Flex w="100%" justify="center" align="center" direction="column">
-              <IconDatabaseOff size={rem(24)} />
+              <Image src={NodataImg} alt="nodata" sx={{
+                width: '80% !important'
+              }}/>
               <Text
                 sx={(theme) => ({
                   fontWeight: 500,
-                  fontSize: rem(14),
+                  fontSize: rem(16),
                 })}
               >
-                No Data
+                Apologies, but it seems that we have no data for this website.
               </Text>
             </Flex>
           )}
