@@ -85,13 +85,6 @@ const GroupedBarChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
       scales: {
         x: {
           stacked: true,
-          ticks: {
-            // Include a dollar sign in the ticks
-            callback: function (value: any, index: number, values: any) {
-              console.log(value, index, values)
-              return checkType2ParseData(chartData[0].x_field, value)
-            },
-          },
         },
         y: {
           stacked: true,
@@ -102,7 +95,9 @@ const GroupedBarChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
 
   const data = useMemo(() => {
     return {
-      labels: chartData[0].row_data.map((stack) => stack[chartData[0].x_field]),
+      labels: chartData[0].row_data.map((stack) =>
+        checkType2ParseData(chartData[0].x_field, stack[chartData[0].x_field]),
+      ),
       datasets: chartData.map((bar, index) => ({
         label: bar.label,
         data: bar.row_data.map((stack) => stack[chartData[0].y_field]),

@@ -85,7 +85,6 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
           ticks: {
             // Include a dollar sign in the ticks
             callback: function (value: any, index: number, values: any) {
-              console.log(value, index, values)
               return checkType2ParseData(chartData[0].x_field, value)
             },
           },
