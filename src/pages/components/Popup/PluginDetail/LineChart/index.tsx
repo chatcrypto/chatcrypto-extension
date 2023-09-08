@@ -46,10 +46,34 @@ const useStyles = createStyles(() => ({
 }))
 
 const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
-
   const chartData: IDateLineChart[] = useMemo(() => {
     return pluginDetail.data as IDateLineChart[]
   }, [pluginDetail])
+
+  const minMaxXVal = useMemo(() => {
+    let min = Math.min(
+      ...chartData[0].row_data.map((i) => Number(i[chartData[0].x_field])),
+    )
+    let max = Math.max(
+      ...chartData[0].row_data.map((i) => Number(i[chartData[0].x_field])),
+    )
+    chartData.forEach((d) => {
+      const maxD = Math.max(...d.row_data.map((i) => Number(i[d.x_field])))
+      const minD = Math.min(...d.row_data.map((i) => Number(i[d.x_field])))
+      if (max <= maxD) {
+        max = maxD
+      }
+      if (min >= minD) {
+        min = minD
+      }
+    })
+    return {
+      min,
+      max,
+    }
+  }, [chartData])
+
+  console.log(minMaxXVal, 'minMaxXVal')
 
   const { classes } = useStyles()
   const options = useMemo(() => {
@@ -64,17 +88,19 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
               return checkType2ParseData(chartData[0].x_field, value)
             },
             font: {
-              size: 10
-            }
+              size: 10,
+            },
           },
           title: {
             display: true,
             text: chartData[0].x_label,
             font: {
               weight: 'bold',
-              size: 12
-            }
+              size: 12,
+            },
           },
+          // min: minMaxXVal.min,
+          // max: minMaxXVal.max,
         },
         y: {
           title: {
@@ -82,15 +108,15 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
             text: chartData[0].y_label,
             font: {
               weight: 'bold',
-              size: 12
-            }
+              size: 12,
+            },
           },
           ticks: {
             font: {
-              size: 10
-            }
-          }
-        }
+              size: 10,
+            },
+          },
+        },
       },
       plugins: {
         legend: {
@@ -120,6 +146,12 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
             enabled: true,
             mode: 'xy',
           },
+          limits: {
+            x: {
+              min: minMaxXVal.min,
+              max: minMaxXVal.max,
+            },
+          },
         },
         tooltip: {
           callbacks: {
@@ -133,7 +165,7 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
         },
       },
     }
-  }, [pluginDetail.title, chartData])
+  }, [pluginDetail.title, chartData, minMaxXVal])
 
   const data = useMemo(() => {
     return {

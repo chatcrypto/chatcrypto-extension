@@ -6,7 +6,7 @@ import { FieldChartType } from "./types"
 
 export const checkType2ParseData = (type: string, data: any) => {
   if (type === FieldChartType.Date) {
-    return dayjs(convertToMiliseconds(data)).format('DD/MM/YY (HH:mm)')
+    return dayjs(convertToMiliseconds(data)).format('DD/MM/YY')
   }
   return data
 }
