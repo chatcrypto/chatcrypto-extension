@@ -46,29 +46,6 @@ const useStyles = createStyles(() => ({
 }))
 
 const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
-  // const scaleOpts = {
-  //   grid: {
-  //     // borderColor: Utils.randomColor(1),
-  //     color: 'rgba( 0, 0, 0, 0.1)',
-  //   },
-  //   title: {
-  //     display: true,
-  //     // text: (ctx) => ctx.scale.axis + ' axis',
-  //   },
-  // }
-  // const scales: any = {
-  //   x: {
-  //     type: 'category',
-  //     min: 1,
-  //     max: 11,
-  //   },
-  //   y: {
-  //     type: 'linear',
-  //   },
-  // }
-  // Object.keys(scales).forEach((scale) =>
-  //   Object.assign(scales[scale], scaleOpts),
-  // )
 
   const chartData: IDateLineChart[] = useMemo(() => {
     return pluginDetail.data as IDateLineChart[]
@@ -79,7 +56,6 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
     return {
       responsive: true,
       maintainAspectRatio: false,
-      // scales: scales,
       scales: {
         x: {
           ticks: {
@@ -122,9 +98,10 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
         tooltip: {
           callbacks: {
             label: function (context: any) {
-              return `${context.dataset.label}: ${
-                checkType2ParseData(chartData[0].x_field, context.dataset.data[context.dataIndex].x)
-              } : ${context.dataset.data[context.dataIndex].y}`
+              return `${context.dataset.label}: ${checkType2ParseData(
+                chartData[0].x_field,
+                context.dataset.data[context.dataIndex].x,
+              )} : ${context.dataset.data[context.dataIndex].y}`
             },
           },
         },
@@ -143,6 +120,7 @@ const LineChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
         showLine: true,
         fill: false,
         backgroundColor: COLORS_CHART[index],
+        borderColor: COLORS_CHART[index],
       })),
     }
   }, [pluginDetail])
