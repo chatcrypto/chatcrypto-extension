@@ -30,9 +30,10 @@ const PieChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
         tooltip: {
           callbacks: {
             label: function (context: any) {
+              console.log(context, 'context')
               return `${context.dataset.label}: ${
                 context.dataset.rawData[context.dataIndex]
-              }`
+              } (${context.formattedValue}%)`
             },
           },
         },
@@ -65,12 +66,7 @@ const PieChart = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
     ],
   }
 
-  return (
-    <Pie
-      data={data}
-      options={options as any}
-    />
-  )
+  return <Pie data={data} options={options as any} />
 }
 
 export default PieChart

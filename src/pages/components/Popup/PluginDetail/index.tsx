@@ -19,7 +19,7 @@ import PieChart from './PieChart'
 import VerticalBarChart from './VerticalBarChart'
 
 const useStyles = createStyles(
-  (theme, { isLineChart }: { isLineChart?: boolean }) => ({
+  (theme, { isWideChart }: { isWideChart?: boolean }) => ({
     boxWrapper: {
       borderRadius: '16px',
       border: '1px solid #eaeaea',
@@ -27,8 +27,8 @@ const useStyles = createStyles(
       backgroundColor: 'white',
       canvas: {
         width: '100% !important',
-        height: isLineChart ? 'auto !important' : '100% !important',
-        aspectRatio: isLineChart ? '0.8' : 'unset',
+        height: isWideChart ? 'auto !important' : '100% !important',
+        aspectRatio: isWideChart ? '0.8' : 'unset',
       },
     },
   }),
@@ -44,7 +44,8 @@ const getPluginDetail = async (pluginId: string, domain: string) => {
 const PluginGraph = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
   const { data } = pluginDetail
   const { classes } = useStyles({
-    isLineChart: pluginDetail?.chart_type === PluginType.LineChart,
+    isWideChart:
+      pluginDetail?.chart_type === PluginType.LineChart,
   })
   if (data === 'No Data') {
     return null
