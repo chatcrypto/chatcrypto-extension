@@ -37,6 +37,5 @@
       "https://www.googleapis.com/auth/contacts",
       "https://www.googleapis.com/auth/contacts.readonly"
     ]
-  },
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxlIIQxCmjFvIHXCnBSThJOaikK6Vmj1FeGrT0r11qXwdjf5p2C1VONOYpUAYm//epZHSNEtfEfzBzei/CNJ6dmFei/mrqvSS8N/K4NDo96ByhJ6oxGv00hR4ZvKun64o3sSBUmYKXfldbY7rtCrZHxaRU7PTE8UdlhvGd+fp5R2kBfTEiwBx+5xVj5mJTAFlGVbHEqm6WxqMIG3A7UOJI/OAflV12IT/Wtw7lTIWYjlOAvnuGqYdDjlxrGO2Cd2dCyOyIM5VIrEMz6Q6huMGUE7XCQLNowX0ZsSgC93ush86wA6Hbp2zRPfh5U49seDncslJGk5f9Mc8PTsCa5WOVQIDAQAB"
+  }
 }
