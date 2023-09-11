@@ -10,6 +10,9 @@ export interface IDataTablePlugin {
   row_data: any[][]
   table_header: string[]
 }
+export interface IDataListPlugin {
+  [key: string]: any
+}
 
 export interface IDateLineChart {
   label: string
@@ -44,6 +47,7 @@ export interface IPluginDetail {
     | string
     | IDateBarChart[]
     | IDataTablePlugin
+    | IDataListPlugin
   debug_plugin_metadata: Record<any, any>
   debug_plugin_name: Record<any, any>
   description: string
@@ -68,4 +72,5 @@ export enum PluginType {
   PieChart = 'pie',
   GroupedBarChart = 'grouped_bar',
   Table = 'table',
+  List = 'list',
 }

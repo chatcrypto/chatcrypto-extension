@@ -14,6 +14,7 @@ export default createStyles((theme) => ({
     overflowX: 'hidden',
     overflowY: 'hidden',
     wordBreak: 'break-word',
+    borderRadius: '0'
   },
   primaryTextStyle: {
     fontSize: '14px',
@@ -65,7 +66,7 @@ export default createStyles((theme) => ({
     lineHeight: '14px',
   },
   titleText: {
-    fontSize: '18px',
+    fontSize: '16px',
     fontWeight: 600,
     color: '#353535',
     lineHeight: '28px',

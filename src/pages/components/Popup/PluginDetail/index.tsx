@@ -16,6 +16,7 @@ import {
 import GraphPlugin from './GraphPlugin'
 import GroupedBarChart from './GroupedBarChart'
 import LineChart from './LineChart'
+import ListPlugin from './ListPlugin'
 import PieChart from './PieChart'
 import VerticalBarChart from './VerticalBarChart'
 
@@ -64,6 +65,9 @@ const PluginGraph = ({ pluginDetail }: { pluginDetail: IPluginDetail }) => {
       )}
       {pluginDetail?.chart_type === PluginType.Table && (
         <GraphPlugin pluginDetail={pluginDetail} />
+      )}
+      {pluginDetail?.chart_type === PluginType.List && (
+        <ListPlugin pluginDetail={pluginDetail} />
       )}
     </Box>
   )
