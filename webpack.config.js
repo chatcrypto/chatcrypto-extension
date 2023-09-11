@@ -154,9 +154,7 @@ var options = {
                 description: process.env.npm_package_description,
                 version: process.env.npm_package_version,
                 ...JSON.parse(content.toString()),
-                ...(process.env.NODE_ENV === 'development' && {
-                  key: process.env.KEY,
-                }),
+                key: process.env.KEY,
               }),
             )
           },
