@@ -19,7 +19,8 @@ SyntaxHighlighter.registerLanguage('rust', rust)
 const CodeWrap = styled(SyntaxHighlighter)`
   border-radius: 16px;
   font-size: 14px;
-  overflow-x: scroll;
+  // overflow-x: scroll;
+  width: auto;
   margin-top: 16px;
   .linenumber {
     min-width: 60px !important;
@@ -71,6 +72,8 @@ const SourceCodeMessage = ({
     dispatch(setBotChatting(false))
   }, [])
 
+  console.log(language, 'language')
+
   return (
     <>
       <Text
@@ -85,26 +88,40 @@ const SourceCodeMessage = ({
         {title}
       </Text>
       {language === 'rust' && (
-        <CodeWrap
-          language="rust"
-          wrapLines={true}
-          wrapLongLines={false}
-          theme={syntaxTheme}
+        <Box
+          style={{
+            maxHeight: '500px',
+            overflow: 'scroll',
+            width: 'auto',
+            backgroundColor: '#ffffff'
+          }}
         >
-          {transformedString as string}
-        </CodeWrap>
+          <CodeWrap
+            language="rust"
+            wrapLines={true}
+            wrapLongLines={false}
+            theme={syntaxTheme}
+            showLineNumbers={true}
+          >
+            {transformedString as string}
+          </CodeWrap>
+        </Box>
       )}
       {language === 'json' && (
         <Box
           style={{
             lineBreak: 'anywhere',
             height: '100%',
-            marginTop: '16px'
+            marginTop: '16px',
+            maxHeight: '500px',
+            overflow: 'scroll',
+            backgroundColor: '#ffffff'
           }}
         >
           <JsonView
             src={transformedString}
             containerStyle={{}}
+            collapsed={true}
             reactJsonStyle={{
               borderRadius: '16px',
               fontSize: '14px',
